@@ -1,3 +1,4 @@
 {
-	"name": "View"
+	"name": "View",
+	"references":[ "GUID:5f84c2f13f4ff4dff847d40c1e82d56e" ]
 }

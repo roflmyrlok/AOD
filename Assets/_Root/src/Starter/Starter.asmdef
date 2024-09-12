@@ -1,3 +1,4 @@
 {
-	"name": "Starter"
+	"name": "Starter",
+	"references":[ "GUID:c4682c3a2e33546f6b1b455ef4beb87e", "GUID:89225a64112634967bd16529d6ad5221", "GUID:5f84c2f13f4ff4dff847d40c1e82d56e" ]
 }
