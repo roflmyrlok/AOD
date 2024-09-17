@@ -5,13 +5,17 @@ namespace Model
 {
 	public class Field
 	{
-		public List<Character> Characters;
+		private readonly List<Character> characters;
 
-		
+		public Field(List<Character> characters)
+		{
+			this.characters = characters;
+		}
+
 		//general functions
 		public bool IsCharacterPresent(int position)
 		{
-			foreach (var character in Characters)
+			foreach (var character in characters)
 			{
 				if (character.GetCurrentPosition() == position)
 				{
@@ -24,7 +28,7 @@ namespace Model
 		
 		public Character GetCharacterOnPosition(int position)
 		{
-			foreach (var character in Characters)
+			foreach (var character in characters)
 			{
 				if (character.GetCurrentPosition() == position)
 				{

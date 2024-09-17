@@ -1,28 +1,35 @@
 using System;
+using System.Collections.Generic;
 using Exception = System.Exception;
 
 namespace Model
 {
-	public class FightSceneFlow : IInteractiveFightScene
+	public class FightRound : IInteractiveFightScene
 	{
 		private Field _currentFightField;
 		private ISceneView _sceneView;
 		private (Character, int)? _characterSkillPressed;
 
-		public FightSceneFlow(Field currentFightField, ISceneView sceneView)
+		public FightRound(Field currentFightField, ISceneView sceneView)
 		{
 			_currentFightField = currentFightField;
 			_sceneView = sceneView;
 		}
 
-		public void CharacterSkillHovered(int characterPosition, int skillNumber)
+		public void ShowSkillTargets(int characterPosition, int skillNumber)
 		{
 			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
 			var skillTargets = character.GetSkillTargets(skillNumber);
 			_sceneView.ShowTargetCharacters(skillTargets);
 		}
 
-		public void CharacterSkillPressed(int characterPosition, int skillPosition)
+		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
+		{
+			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
+			character.UseSkill(skillPosition, targetPosition[0], _currentFightField);
+		}
+
+		public void UseCharacterSkill(int characterPosition, int skillPosition)
 		{
 			if (!_currentFightField.IsCharacterPresent(characterPosition))
 			{
@@ -35,17 +42,6 @@ namespace Model
 				Item2 = skillPosition
 			};
 
-		}
-
-		public void CharacterAsTargetPressed(int targetPosition)
-		{
-			if (!_characterSkillPressed.HasValue)
-			{
-				throw new Exception("Character skill not pressed");
-			}
-
-			_characterSkillPressed.Value.Item1.UseSkill(_characterSkillPressed.Value.Item2, targetPosition,
-				_currentFightField);
 		}
 
 		public void CharacterChangePosition(int oldPosition, int newPosition)

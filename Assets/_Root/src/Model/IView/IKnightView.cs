@@ -1,7 +1,7 @@
 namespace Model
 {
-	public interface IKnightView 
+	public interface IKnightView : ICharacterView
 	{
-		
+		void DoKnightThing();
 	}
 }
