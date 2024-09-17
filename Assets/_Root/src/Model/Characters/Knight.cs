@@ -1,9 +1,8 @@
 namespace Model
 {
-	public class Knight : Character, IPlayerCharacter
+	public class Knight : Character<IKnightView>, IPlayerCharacter
 
 	{
-		private IKnightView _knightView;
 		private IPlayerCharacter _playerCharacterImplementation;
 
 		public IPerformedSkillView PerformedSkillView
@@ -12,14 +11,12 @@ namespace Model
 			set => _playerCharacterImplementation.PerformedSkillView = value;
 		}
 	
-		public Knight(ICharacterView characterView, IKnightView knightView, IPerformedSkillView performedSkillView) : base(characterView)
+		public Knight() 
 		{
-			_knightView = knightView;
-			PerformedSkillView = performedSkillView;
-			Skills.Add(new SwordAttackKnight(PerformedSkillView));
+			//Skills.Add(new SwordAttackKnight(PerformedSkillView));
 			Name = "Knight";
-			ChangeCurrentHealth(35);
-			ChangeMaxHealth(35);
+			//ChangeCurrentHealth(35);
+			//ChangeMaxHealth(35);
 			Attack = 3;
 			Defence = 4;
 			Speed = 7;

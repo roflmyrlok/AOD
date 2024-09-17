@@ -1,20 +1,21 @@
 using Model;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace View
 {
-	public class CharacterView : SceneCharacter<Character>, ICharacterView
+	public abstract class CharacterView<TCharacter> : CharacterView, ICharacterView
+		where TCharacter : Character
 	{
 		public HealthBar healthBar;
 		public int position;
 		
-		public void CharacterPositionChanged(int newPosition)
+		public override bool IsViewFor(Character shape) => shape is TCharacter;
+		
+		public override void CharacterPositionChanged(int newPosition)
 		{
 			position = newPosition;
 		}
 
-		public void CharacterHealthChanged(int currentHealth, int maxHealth)
+		public override void CharacterHealthChanged(int currentHealth, int maxHealth)
 		{
 			
 		}

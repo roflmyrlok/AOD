@@ -1,7 +1,7 @@
 namespace Model
 {
-	public interface IArcherView
+	public interface IArcherView : ICharacterView
 	{
-		
+		void DoArcherThing();
 	}
 }

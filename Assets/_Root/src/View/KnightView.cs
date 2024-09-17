@@ -2,7 +2,7 @@ using Model;
 
 namespace View
 {
-	public class KnightView : SceneCharacter<Knight>, IKnightView
+	public class KnightView : CharacterView<Knight>, IKnightView
 	{
 		
 	}

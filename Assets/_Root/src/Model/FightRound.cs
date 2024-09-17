@@ -3,13 +3,13 @@ using Exception = System.Exception;
 
 namespace Model
 {
-	public class FightSceneFlow : IInteractiveFightScene
+	public class FightRound : IInteractiveFightScene
 	{
 		private Field _currentFightField;
 		private ISceneView _sceneView;
 		private (Character, int)? _characterSkillPressed;
 
-		public FightSceneFlow(Field currentFightField, ISceneView sceneView)
+		public FightRound(Field currentFightField, ISceneView sceneView)
 		{
 			_currentFightField = currentFightField;
 			_sceneView = sceneView;

@@ -5,7 +5,7 @@ namespace Model
 {
 	public abstract class Character : IInteractiveCharacter
 	{
-		private ICharacterView _characterView;
+		protected abstract ICharacterView CharacterView { get; }
 		public string Name;
 		private int _health;
 		private int _maxHealth;
@@ -15,18 +15,19 @@ namespace Model
 		private int _currentPosition;
 		public List<Skill> Skills;
 
-		public Character(ICharacterView characterView)
+		public Character()
 		{
-			_characterView = characterView;
 			Skills = new List<Skill>() {};
 			Name = "";
-			ChangeCurrentHealth(0);
-			ChangeMaxHealth(1);
+			//ChangeCurrentHealth(0);
+			//ChangeMaxHealth(1);
 			Attack = 0;
 			Defence = 0;
 			Speed = 0;
 			_currentPosition = Int32.MaxValue;
 		}
+
+		public abstract void InitView(ICharacterView view);
 
 		public void TakeDamage(int damage, Character performer)
 		{
@@ -73,7 +74,7 @@ namespace Model
 		public void SetCurrentPosition(int newPosition)
 		{
 			_currentPosition = newPosition;
-			_characterView.CharacterPositionChanged(_currentPosition);
+			CharacterView.CharacterPositionChanged(_currentPosition);
 		}
 
 		public void ChangeCurrentHealth(int newValue)
@@ -83,13 +84,13 @@ namespace Model
 				_health = _maxHealth;
 			}
 			this._health = newValue;
-			_characterView.CharacterHealthChanged(GetCurrentHealth(), GetMaxHealth());
+			CharacterView.CharacterHealthChanged(GetCurrentHealth(), GetMaxHealth());
 		}
 		
 		public void ChangeMaxHealth(int newValue)
 		{
 			_maxHealth = newValue;
-			_characterView.CharacterHealthChanged(GetCurrentHealth(), GetMaxHealth());
+			CharacterView.CharacterHealthChanged(GetCurrentHealth(), GetMaxHealth());
 		}
 
 		public int GetCurrentHealth()
@@ -100,6 +101,23 @@ namespace Model
 		public int GetMaxHealth()
 		{
 			return _maxHealth;
+		}
+	}
+
+	public abstract class Character<TView> : Character where TView : ICharacterView
+	{
+		protected TView TypedView { get; private set; } 
+
+		protected override ICharacterView CharacterView => TypedView;
+
+		public override void InitView(ICharacterView view)
+		{
+			if (view is not TView typed)
+			{
+				throw new Exception($"trying to assign {view} to Archer");
+			}
+
+			TypedView = typed;
 		}
 	}
 }

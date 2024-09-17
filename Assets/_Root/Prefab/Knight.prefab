@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2418903084641750295
+--- !u!1 &5086090813562504081
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,52 +8,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1199361147563257391}
-  - component: {fileID: 7758905620942118100}
+  - component: {fileID: 1352515181107601858}
+  - component: {fileID: 5053127035453332186}
   m_Layer: 0
-  m_Name: Archer
+  m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1199361147563257391
+--- !u!4 &1352515181107601858
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2418903084641750295}
+  m_GameObject: {fileID: 5086090813562504081}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4730830170163001462}
+  - {fileID: 4051138497490301570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7758905620942118100
+--- !u!114 &5053127035453332186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2418903084641750295}
+  m_GameObject: {fileID: 5086090813562504081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c87932d88de4ea4a4c6886014eadbe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f0d6936c7644c72a86620bc39f43f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1944162881494355075}
+  healthBar: {fileID: 7162075607095641719}
   position: 0
---- !u!1001 &8358269900704856688
+--- !u!1001 &747960612126961796
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1199361147563257391}
+    m_TransformParent: {fileID: 1352515181107601858}
     m_Modifications:
     - target: {fileID: 2288243501491638642, guid: 1607a2454805d42529f146bc0f18bbf9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -152,10 +152,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1607a2454805d42529f146bc0f18bbf9, type: 3}
---- !u!114 &1944162881494355075 stripped
+--- !u!224 &4051138497490301570 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3628145144862999046, guid: 1607a2454805d42529f146bc0f18bbf9, type: 3}
+  m_PrefabInstance: {fileID: 747960612126961796}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7162075607095641719 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7567604178305070835, guid: 1607a2454805d42529f146bc0f18bbf9, type: 3}
-  m_PrefabInstance: {fileID: 8358269900704856688}
+  m_PrefabInstance: {fileID: 747960612126961796}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -163,8 +168,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9519523b127314f04aff09482fc65814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4730830170163001462 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3628145144862999046, guid: 1607a2454805d42529f146bc0f18bbf9, type: 3}
-  m_PrefabInstance: {fileID: 8358269900704856688}
-  m_PrefabAsset: {fileID: 0}

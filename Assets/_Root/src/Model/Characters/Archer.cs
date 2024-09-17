@@ -1,6 +1,8 @@
 namespace Model
 {
-	public class Archer : Character
+	using System;
+
+	public class Archer : Character<IArcherView>
 	{
 		private IArcherView _archerView;
 		private IPlayerCharacter _playerCharacterImplementation;
@@ -11,18 +13,17 @@ namespace Model
 			set => _playerCharacterImplementation.PerformedSkillView = value;
 		}
 
-		Archer(ICharacterView characterView,IArcherView archerView, IPerformedSkillView performedSkillView) : base(characterView)
+		public Archer()
 		{
-			_archerView = archerView;
-			PerformedSkillView = performedSkillView;
-			Skills.Add(new BowAttackArcher(PerformedSkillView));
+			//Skills.Add(new BowAttackArcher(PerformedSkillView));
 			Name = "Archer";
-			ChangeCurrentHealth(20);
-			ChangeMaxHealth(20);
+			//ChangeCurrentHealth(20);
+			//ChangeMaxHealth(20);
 			Attack = 4;
 			Defence = 2;
 			Speed = 10;
 
 		}
+
 	}
 }
