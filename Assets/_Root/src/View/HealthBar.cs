@@ -3,18 +3,16 @@ using UnityEngine.UI;
 
 namespace View
 {
-    public class HealthBar : MonoBehaviour
-    {
-        public Slider slider;
+	public static class HealthBar
+	{
+		public static void SetMaxHealth(Slider slider, int value)
+		{
+			slider.maxValue = value;
+		}
 
-        public void SetMaxHealth(int value)
-        {
-            slider.maxValue = value;
-        }
-    
-        public void SetCurrentHealth(int value)
-        {
-            slider.value = value;
-        }
-    }
+		public static void SetCurrentHealth(Slider slider, int value)
+		{
+			slider.value = value;
+		}
+	}
 }

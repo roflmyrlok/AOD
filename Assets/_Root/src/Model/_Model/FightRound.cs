@@ -3,15 +3,15 @@ using Exception = System.Exception;
 
 namespace Model
 {
-	public class FightRound : IInteractiveFightScene
+	public class FightRound : IInteractiveFightRound
 	{
 		private Field _currentFightField;
-		private ISceneView _sceneView;
+		private IFightRoundView _fightRoundView;
 
-		public FightRound(Field currentFightField, ISceneView sceneView)
+		public FightRound(Field currentFightField, IFightRoundView fightRoundView)
 		{
 			_currentFightField = currentFightField;
-			_sceneView = sceneView;
+			_fightRoundView = fightRoundView;
 		}
 
 		public void ShowSkillTargets(int characterPosition, int skillPosition)
@@ -27,13 +27,13 @@ namespace Model
 					resultList.Add(target);
 				}
 			}
-			_sceneView.ShowTargetCharacters(resultList);
+			_fightRoundView.ShowTargetCharacters(resultList);
 		}
 
 		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
 		{
 			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
-			var skill = character.GetAvailableSkills()[skillPosition];
+			var skill = character.GetAvailableSkills()[skillPosition - 1];
 			var targets = new List<Character>();
 			foreach (var pos in targetPosition)
 			{

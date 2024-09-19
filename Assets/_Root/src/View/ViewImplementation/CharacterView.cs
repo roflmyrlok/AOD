@@ -1,5 +1,6 @@
 using Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace View
 {
@@ -7,13 +8,12 @@ namespace View
 		where TCharacter : Character
 	{
 		[SerializeField]
-		public HealthBar healthBar;
+		private Slider healthSlider; // Reference to the Slider component
 
 		public override bool IsViewFor(Character shape) => shape is TCharacter;
 
 		public override void CharacterPositionChanged(int newPosition)
 		{
-			// Ensure the new position is valid
 			if (newPosition < 1 || newPosition > 8)
 			{
 				Debug.LogError("Invalid position. Must be between 1 and 8.");
@@ -21,14 +21,27 @@ namespace View
 			}
 
 			var currentCanvas = GetComponentInParent<Canvas>();
-			// Move the character to the new position using the static method
 			PositionalDistribution.MoveCharacterToPosition(transform, newPosition, currentCanvas);
 		}
 
 		public override void CharacterHealthChanged(int currentHealth, int maxHealth)
 		{
-			healthBar.SetCurrentHealth(currentHealth);
-			healthBar.SetMaxHealth(maxHealth);
+			if (healthSlider == null)
+			{
+				Debug.LogError("HealthSlider is not assigned.");
+				return;
+			}
+
+			// Use the static HealthBar class
+			HealthBar.SetCurrentHealth(healthSlider, currentHealth);
+			HealthBar.SetMaxHealth(healthSlider, maxHealth);
 		}
+	}
+
+	public abstract class CharacterView : MonoBehaviour, ICharacterView
+	{ 
+		public abstract bool IsViewFor(Character shape);
+		public abstract void CharacterPositionChanged(int position);
+		public abstract void CharacterHealthChanged(int currentHealth, int maxHealth);
 	}
 }
