@@ -19,8 +19,6 @@ namespace Model
 		{
 			Skills = new List<Skill>() {};
 			Name = "";
-			//ChangeCurrentHealth(0);
-			//ChangeMaxHealth(1);
 			Attack = 0;
 			Defence = 0;
 			Speed = 0;
@@ -29,12 +27,12 @@ namespace Model
 
 		public abstract void InitView(ICharacterView view);
 
-		public void TakeDamage(int damage, Character performer)
+		public void TakeDamage(float damage, Character performer)
 		{
 			if (GetCurrentHealth() > damage)
 			{
 				var newHealth = GetCurrentHealth() -damage;
-				ChangeCurrentHealth(newHealth);
+				ChangeCurrentHealth((int)newHealth);
 			}
 			else
 			{
@@ -42,9 +40,9 @@ namespace Model
 			}
 		}
 
-		public void DealDamage(int damage, Character target)
+		public void DealAttackMultiDamage(float multiplier, Character target)
 		{
-			target.TakeDamage(damage, this);
+			target.TakeDamage(this.Attack * multiplier, this);
 		}
 
 		public bool IsAlive()
@@ -52,21 +50,16 @@ namespace Model
 			return GetCurrentHealth() != 0;
 		}
 
-		public List<int> GetSkillTargets(int skillNumber)
+		public List<Skill> GetAvailableSkills()
 		{
-			return Skills[skillNumber - 1].GetPositionsCanTarget();
+			return Skills;
 		}
 
-		public virtual void UseSkill(int skillNumber, int skillTarget, Field currentField)
+		public bool IsAvailableSkill(Skill skill)
 		{
-			if (Skills.Count < skillNumber)
-			{
-				throw new Exception("no such skill");
-			}
-			Skills[skillNumber - 1].Perform(currentField, skillTarget, this);
+			return Skills.Contains(skill);
 		}
 
-		
 		public int GetCurrentPosition()
 		{
 			return _currentPosition;

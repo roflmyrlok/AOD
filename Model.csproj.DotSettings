@@ -2,6 +2,25 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Ccharacters/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextended_005Carcher/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextended_005Cknight/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextended_005Cmonster/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextended_005Csample/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextended/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions_005Carcher/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions_005Cknight/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions_005Cmonster/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions_005Csample/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextentions_005Cskills/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextention_005Carcher/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextention_005Cknight/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextention_005Cmonster/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextention_005Csample/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cextention/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cinterfaces/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Ciview/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cskills/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005Cskills/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005C_005Fcharacters/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005C_005Fmodel/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005C_005Froot_005Csrc_005Cmodel_005C_005Fmodel_005Ciview/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

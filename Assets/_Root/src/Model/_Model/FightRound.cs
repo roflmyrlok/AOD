@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Exception = System.Exception;
 
@@ -8,7 +7,6 @@ namespace Model
 	{
 		private Field _currentFightField;
 		private ISceneView _sceneView;
-		private (Character, int)? _characterSkillPressed;
 
 		public FightRound(Field currentFightField, ISceneView sceneView)
 		{
@@ -16,32 +14,32 @@ namespace Model
 			_sceneView = sceneView;
 		}
 
-		public void ShowSkillTargets(int characterPosition, int skillNumber)
+		public void ShowSkillTargets(int characterPosition, int skillPosition)
 		{
 			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
-			var skillTargets = character.GetSkillTargets(skillNumber);
-			_sceneView.ShowTargetCharacters(skillTargets);
+			var skill = character.GetAvailableSkills()[skillPosition];
+			var targets = skill.GetPositionsCanTarget();
+			var resultList = new List<int>();
+			foreach (var target in targets)
+			{
+				if (_currentFightField.IsCharacterPresent(target))
+				{
+					resultList.Add(target);
+				}
+			}
+			_sceneView.ShowTargetCharacters(resultList);
 		}
 
 		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
 		{
 			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
-			character.UseSkill(skillPosition, targetPosition[0], _currentFightField);
-		}
-
-		public void UseCharacterSkill(int characterPosition, int skillPosition)
-		{
-			if (!_currentFightField.IsCharacterPresent(characterPosition))
+			var skill = character.GetAvailableSkills()[skillPosition];
+			var targets = new List<Character>();
+			foreach (var pos in targetPosition)
 			{
-				throw new Exception("Character not present");
+				targets.Add(_currentFightField.GetCharacterOnPosition(pos));
 			}
-
-			_characterSkillPressed = new ValueTuple<Character, int>()
-			{
-				Item1 = _currentFightField.GetCharacterOnPosition(characterPosition),
-				Item2 = skillPosition
-			};
-
+			skill.PerformSkill(character, targets);
 		}
 
 		public void CharacterChangePosition(int oldPosition, int newPosition)
