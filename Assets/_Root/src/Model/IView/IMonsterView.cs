@@ -1,7 +1,7 @@
 namespace Model
 {
-	public class IMonsterView
+	public interface IMonsterView : ICharacterView
 	{
-		
+		void DoMonsterThing();
 	}
 }

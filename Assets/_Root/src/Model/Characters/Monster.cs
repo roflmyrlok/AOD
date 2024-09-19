@@ -1,19 +1,17 @@
 namespace Model
 {
-	public class Monster : Character
+	public class Monster : Character<IMonsterView>
 	{
-		private IMonsterView _monsterView;
-
-		Monster(ICharacterView characterView,IMonsterView monsterView) : base(characterView)
+		public Monster() 
 		{
-			_monsterView = monsterView;
 			Name = "Monster";
-			ChangeCurrentHealth(20);
-			ChangeMaxHealth(20);
+			//ChangeCurrentHealth(20);
+			//ChangeMaxHealth(20);
 			Attack = 2;
 			Defence = 1;
 			Speed = 1;
 
 		}
+		
 	}
 }
