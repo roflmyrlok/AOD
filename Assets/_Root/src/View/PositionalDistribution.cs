@@ -54,6 +54,27 @@ namespace View
 
 			// Move the character's transform to the new position
 			characterTransform.position = new Vector3(worldPosition.x, worldPosition.y, characterTransform.position.z);
+
+			// Find all child objects tagged as "CharacterModel" and rotate them
+			foreach (Transform child in characterTransform.GetComponentsInChildren<Transform>())
+			{
+				if (child.CompareTag("CharacterModel"))
+				{
+					// Rotate characters in positions 5-8 to face right to left
+					if (position >= 5 && position <= 8)
+					{
+						child.localRotation = Quaternion.Euler(0, 180, 0); // Rotate to face left
+					}
+					else
+					{
+						child.localRotation = Quaternion.Euler(0, 0, 0); // Reset rotation to face right
+					}
+				}
+			}
 		}
+
+
+
+
 	}
 }
