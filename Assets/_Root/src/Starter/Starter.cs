@@ -23,7 +23,7 @@ public class Starter : MonoBehaviour
     {
         var characterModels = new List<Character>
         {
-            new Archer(),
+            new Knight(),
             new Archer(),
             new Archer(),
             new Archer(),
@@ -32,6 +32,12 @@ public class Starter : MonoBehaviour
             new Archer(),
             new Archer()
         };
+        
+        foreach (var character in characterModels.OfType<Knight>())
+        {
+            var swordAttackSkill = new SwordAttackKnight();
+            character.Skills.Add(swordAttackSkill); // Assuming AddSkill is a method to add skills to a character
+        }
 
         // Add the BowAttackArcher skill to each Archer
         foreach (var character in characterModels.OfType<Archer>())
@@ -39,6 +45,8 @@ public class Starter : MonoBehaviour
             var bowAttackSkill = new BowAttackArcher();
             character.Skills.Add(bowAttackSkill); // Assuming AddSkill is a method to add skills to a character
         }
+        
+        
 
         var field = new Field(characterModels);
         var charViews = new List<ICharacterView>();

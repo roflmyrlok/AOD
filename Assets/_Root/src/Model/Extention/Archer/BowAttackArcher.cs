@@ -26,10 +26,6 @@ namespace Model
 				}
 				performer.DealAttackMultiDamage(_skillDamageMultiplier, target);
 				//TypedView.ShowBowAttackPerformed(target);
-				
-				//  ^
-				// /  typed view is not assigned as of rn. After fix if view implementation 
-				//    contains animation should perform?
 			}
 			
 		}
