@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace View
 {
-	public class BowAttackView : SkillView<BowAttackArcher>, IBowAttackArcherView
+	public class BowAttackArcherView : SkillView<BowAttackArcher>, IBowAttackArcherView
 	{
 		public void ShowBowAttackPerformed(Character target)
 		{
