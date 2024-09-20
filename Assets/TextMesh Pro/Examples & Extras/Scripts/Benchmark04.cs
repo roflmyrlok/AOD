@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace TMPro.Examples
 {
-    
+
     public class Benchmark04 : MonoBehaviour
     {
 
@@ -45,7 +45,7 @@ namespace TMPro.Examples
                     //textMeshPro.anchor = AnchorPositions.Left;
                     textMeshPro.rectTransform.pivot = new Vector2(0, 0.5f);
 
-                    textMeshPro.enableWordWrapping = false;
+                    textMeshPro.textWrappingMode = TextWrappingModes.NoWrap;
                     textMeshPro.extraPadding = true;
                     textMeshPro.isOrthographic = true;
                     textMeshPro.fontSize = i;
@@ -60,12 +60,12 @@ namespace TMPro.Examples
                     // TextMesh Implementation
                     // Causes crashes since atlas needed exceeds 4096 X 4096
                     /*
-                    GameModel go = new GameModel("Arial " + i);
+                    GameObject go = new GameObject("Arial " + i);
 
                     //if (lineHeight > orthoSize * 2 * 0.9f) return;
 
                     go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 1);
-                                       
+
                     TextMesh textMesh = go.AddComponent<TextMesh>();
                     textMesh.font = Resources.Load("Fonts/ARIAL", typeof(Font)) as Font;
                     textMesh.renderer.sharedMaterial = textMesh.font.material;
