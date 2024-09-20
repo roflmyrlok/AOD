@@ -33,7 +33,7 @@ namespace Model
 		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
 		{
 			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
-			var skill = character.GetAvailableSkills()[skillPosition - 1];
+			var skill = character.GetAvailableSkills()[skillPosition];
 			var targets = new List<Character>();
 			foreach (var pos in targetPosition)
 			{

@@ -3,21 +3,18 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
-using View; // Ensure you include the namespace for your Model classes
+using View;
 
 public class Starter : MonoBehaviour
 {
     [SerializeField]
-    private List<CharacterView> characters; // Prefabs for character views
+    private List<CharacterView> characterPrefabs;
 
     [SerializeField]
-    private FightRoundView fightRoundView; // This should implement Model.IFightRoundView
+    private FightRoundView fightRoundView;
 
     [SerializeField]
-    private Transform charactersParent; // Parent transform for instantiated characters
-
-    [SerializeField]
-    private FightController fightController; // Reference to the FightController
+    private Transform charactersParent;
 
     private void Start()
     {
@@ -33,99 +30,61 @@ public class Starter : MonoBehaviour
             new Archer()
         };
         
-        foreach (var character in characterModels.OfType<Knight>())
-        {
-            var swordAttackSkill = new SwordAttackKnight();
-            character.Skills.Add(swordAttackSkill); // Assuming AddSkill is a method to add skills to a character
-        }
-
-        // Add the BowAttackArcher skill to each Archer
-        foreach (var character in characterModels.OfType<Archer>())
-        {
-            var bowAttackSkill = new BowAttackArcher();
-            character.Skills.Add(bowAttackSkill); // Assuming AddSkill is a method to add skills to a character
-        }
+        InitializeCharacterSkills(characterModels);
         
-        
-
-        var field = new Field(characterModels);
-        var charViews = new List<ICharacterView>();
-
-        // Dictionary to map buttons to characters
-        var buttonToCharacterMap = new Dictionary<Button, Character>();
-
         foreach (var character in characterModels)
         {
-            var prefab = characters.FirstOrDefault(prefab => prefab.IsViewFor(character));
+            var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
             if (prefab != null)
             {
                 var charView = Instantiate(prefab, charactersParent);
-                charViews.Add(charView);
                 character.InitView(charView);
-
-                // Find skill prefabs and buttons
-                var skillViews = charView.GetComponentsInChildren<SkillView>(true);
-                foreach (var skillView in skillViews)
+                
+                var skillControllers = charView.GetComponentsInChildren<SkillController>(true);
+                foreach (var skillController in skillControllers)
                 {
-                    var buttons = skillView.GetComponentsInChildren<Button>(true);
-                    foreach (var button in buttons)
+                    var buttons = skillController.GetComponentsInChildren<Button>(true);
+                    if (buttons.Length == 0)
                     {
-                        buttonToCharacterMap[button] = character; // Map button to character
+                        Debug.LogError($"No buttons found in skill controller: {skillController.name}");
+                        continue;
                     }
+                    skillController.InitializeController(buttons.ToList(), 
+                        new FightRound(new Field(characterModels), fightRoundView), 
+                        character);
                 }
             }
             else
             {
-                throw new System.Exception("There is no prefab for character");
+                throw new System.Exception($"There is no prefab for character: {character.GetType().Name}");
             }
         }
-
-        // Initialize FightRound and FightController
-        var fightRound = new FightRound(field, fightRoundView);
-
-        if (fightController != null)
-        {
-            var buttons = GetButtons(); // Retrieve all buttons
-            fightController.InitializeController(buttons, fightRound, buttonToCharacterMap);
-        }
-        else
-        {
-            Debug.LogError("FightController is not assigned.");
-        }
-
-        // Set character positions and update health
-        var position = 1;
+        
+        int position = 1;
         foreach (var character in characterModels)
         {
             character.SetCurrentPosition(position);
-            position++;
             character.ChangeMaxHealth(100);
             character.ChangeCurrentHealth(100);
             character.Attack = 10;
+            position++;
         }
-        characterModels[2].TakeDamage(5, null);
     }
 
-    private List<Button> GetButtons()
+    private void InitializeCharacterSkills(List<Character> characterModels)
     {
-        var buttons = new List<Button>();
-
-        // Find all character prefabs in the scene
-        var charactersInScene = FindObjectsOfType<CharacterView>(); // Assuming CharacterView is your component for characters
-
-        foreach (var characterView in charactersInScene)
+        foreach (var character in characterModels)
         {
-            // Find all skill prefabs within the character prefab
-            var skillPrefabs = characterView.GetComponentsInChildren<SkillView>(true); // Replace SkillView with the actual component/script used in skill prefabs
-
-            foreach (var skillView in skillPrefabs)
+            if (character is Knight knight)
             {
-                // Find all buttons within the skill prefab
-                var skillButtons = skillView.GetComponentsInChildren<Button>(true);
-                buttons.AddRange(skillButtons);
+                var swordAttackSkill = new SwordAttackKnight();
+                knight.Skills.Add(swordAttackSkill);
+            }
+            else if (character is Archer archer)
+            {
+                var bowAttackSkill = new BowAttackArcher();
+                archer.Skills.Add(bowAttackSkill);
             }
         }
-
-        return buttons;
     }
 }
