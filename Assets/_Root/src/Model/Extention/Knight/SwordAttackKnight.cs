@@ -23,7 +23,7 @@ namespace Model
 					throw new Exception($"{Name} cannot target position {target.GetCurrentPosition()}");
 				}
 				performer.DealAttackMultiDamage(_skillDamageMultiplier, target);
-				TypedView.ShowSwordAttackPerformed(target);
+				//TypedView.ShowSwordAttackPerformed(target);
 			}
 			
 		}
