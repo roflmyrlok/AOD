@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace View
 {
-	public class FightView : MonoBehaviour, IFightView
+	public class SimpleFightFlowView : MonoBehaviour, IFightFlowView
 	{
 		private Fight _fight;
 
@@ -13,6 +13,11 @@ namespace View
 		public void ShowTargetCharacters(List<int> targetPositions)
 		{
 			Debug.Log("Showing target characters at positions: " + string.Join(", ", targetPositions));
+		}
+
+		public void CurrentCharacter(Character character)
+		{
+			Debug.Log(character.GetCurrentPosition()+" is current character");
 		}
 	}
 }

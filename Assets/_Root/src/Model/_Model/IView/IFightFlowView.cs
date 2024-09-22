@@ -1,9 +1,8 @@
 ﻿namespace Model
 {
-    public interface IFightFlowView
+    public interface IFightFlowView : IFightView
     {
         public void CurrentCharacter(Character character);
-        
         
     }
 }

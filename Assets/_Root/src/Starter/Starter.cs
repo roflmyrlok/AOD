@@ -3,89 +3,63 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
-using UnityEngine.Serialization;
 using View;
+using Controller;
+using CharacterController = Controller.CharacterController;
 
 public class Starter : MonoBehaviour
 {
-    [SerializeField]
-    private List<CharacterView> characterPrefabs;
+	[SerializeField]
+	private List<CharacterView> characterPrefabs;
 
-    [FormerlySerializedAs("fightRoundView")] [SerializeField]
-    private FightView fightView;
+	[SerializeField]
+	public IFightFlowView FightFlowView;
 
-    [SerializeField]
-    private Transform charactersParent;
+	[SerializeField]
+	private Transform charactersParent;
+	
+	private void Start()
+	{
+		var characterModels = new List<Character>
+		{
+			new Knight(),
+			new Archer(),
+			new Archer(),
+			new Archer(),
+			new Archer(),
+			new Archer(),
+			new Archer(),
+			new Archer()
+		};
 
-    private void Start()
-    {
-        var characterModels = new List<Character>
-        {
-            new Knight(),
-            new Archer(),
-            new Archer(),
-            new Archer(),
-            new Archer(),
-            new Archer(),
-            new Archer(),
-            new Archer()
-        };
-        
-        InitializeCharacterSkills(characterModels);
-        
-        foreach (var character in characterModels)
-        {
-            var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
-            if (prefab != null)
-            {
-                var charView = Instantiate(prefab, charactersParent);
-                character.InitView(charView);
-                
-                var skillControllers = charView.GetComponentsInChildren<SkillController>(true);
-                foreach (var skillController in skillControllers)
-                {
-                    var buttons = skillController.GetComponentsInChildren<Button>(true);
-                    if (buttons.Length == 0)
-                    {
-                        Debug.LogError($"No buttons found in skill controller: {skillController.name}");
-                        continue;
-                    }
-                    skillController.InitializeController(buttons.ToList(), 
-                        new Fight(new Field(characterModels), fightView), 
-                        character);
-                }
-            }
-            else
-            {
-                throw new System.Exception($"There is no prefab for character: {character.GetType().Name}");
-            }
-        }
-        
-        int position = 1;
-        foreach (var character in characterModels)
-        {
-            character.SetCurrentPosition(position);
-            character.ChangeMaxHealth(100);
-            character.ChangeCurrentHealth(100);
-            character.Attack = 10;
-            position++;
-        }
-    }
+		var fightFlow = new SimpleFightFlow(new Field(characterModels), FightFlowView);
 
-    private void InitializeCharacterSkills(List<Character> characterModels)
-    {
-        foreach (var character in characterModels)
-        {
-            if (character is Knight knight)
-            {
-                var swordAttackSkill = new SwordAttackKnight();
-                knight.Skills.Add(swordAttackSkill);
-            }
-            else if (character is Archer archer)
-            {
-                var bowAttackSkill = new BowAttackArcher();
-                archer.Skills.Add(bowAttackSkill);
-            }
-        }
-    }
+		foreach (var character in characterModels)
+		{
+			var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
+			if (prefab != null)
+			{
+				var charView = Instantiate(prefab, charactersParent);
+				character.InitViewAndStats(charView);
+		
+				var skillViews = charView.GetComponentsInChildren<ISkillView>(true).ToList();
+				character.InitSkillsAndSkillViews(skillViews);
+
+				var characterController = charView.GetComponentInChildren<CharacterController>();
+				if (characterController != null)
+				{
+					var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
+					characterController.InitializeController(character, fightFlow, buttons);
+				}
+			}
+		}
+
+
+		int position = 1;
+		foreach (var character in characterModels)
+		{
+			character.SetCurrentPosition(position);
+			position++;
+		}
+	}
 }

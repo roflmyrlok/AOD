@@ -3,77 +3,66 @@ using Exception = System.Exception;
 
 namespace Model
 {
-	public class Fight : IInteractiveFight
+	public abstract class Fight : IInteractiveFight
 	{
-		private Field _currentFightField;
-		private IFightView _fightView;
+		internal Field CurrentFightField;
+		internal IFightView FightView;
 
-		public Fight(Field currentFightField, IFightView fightView)
+		protected Fight(Field currentFightField, IFightView fightView)
 		{
-			_currentFightField = currentFightField;
-			_fightView = fightView;
+			CurrentFightField = currentFightField;
+			FightView = fightView;
 		}
 
 		public void ShowSkillTargets(int characterPosition, int skillPosition)
 		{
-			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
+			var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
 			var skill = character.GetAvailableSkills()[skillPosition];
 			var targets = skill.GetPositionsCanTarget();
 			var resultList = new List<int>();
 			foreach (var target in targets)
 			{
-				if (_currentFightField.IsCharacterPresent(target))
+				if (CurrentFightField.IsCharacterPresent(target))
 				{
 					resultList.Add(target);
 				}
 			}
-			_fightView.ShowTargetCharacters(resultList);
+			FightView.ShowTargetCharacters(resultList);
 		}
 
 		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
 		{
-			var character = _currentFightField.GetCharacterOnPosition(characterPosition);
+			var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
 			var skill = character.GetAvailableSkills()[skillPosition];
 			var targets = new List<Character>();
 			foreach (var pos in targetPosition)
 			{
-				targets.Add(_currentFightField.GetCharacterOnPosition(pos));
+				targets.Add(CurrentFightField.GetCharacterOnPosition(pos));
 			}
 			skill.PerformSkill(character, targets);
 		}
 
-		public void CharacterChangePosition(int oldPosition, int newPosition)
+		public bool CharacterChangePosition(int oldPosition, int newPosition)
 		{
-			if (!_currentFightField.IsCharacterPresent(oldPosition))
+			if (!CurrentFightField.IsCharacterPresent(oldPosition))
 			{
-				throw new Exception("no character at position");
+				return false;
 			}
 
-			if (!_currentFightField.IsCharacterPresent(newPosition))
+			if (!CurrentFightField.IsCharacterPresent(newPosition))
 			{
-				_currentFightField.GetCharacterOnPosition(oldPosition).SetCurrentPosition(newPosition);
+				CurrentFightField.GetCharacterOnPosition(oldPosition).SetCurrentPosition(newPosition);
 			}
 			else
 			{
-				var tmp1 = _currentFightField.GetCharacterOnPosition(oldPosition);
-				var tmp2 = _currentFightField.GetCharacterOnPosition(newPosition);
+				var tmp1 = CurrentFightField.GetCharacterOnPosition(oldPosition);
+				var tmp2 = CurrentFightField.GetCharacterOnPosition(newPosition);
 				tmp1.SetCurrentPosition(newPosition);
 				tmp2.SetCurrentPosition(oldPosition);
-
 			}
+			return true;
 		}
 		
-		public Character GetCharacterAtPosition(int position)
-		{
-			// Check if the character is present at the given position
-			if (!_currentFightField.IsCharacterPresent(position))
-			{
-				return null; // Or throw an exception if preferred
-			}
-
-			// Retrieve the character at the position
-			return _currentFightField.GetCharacterOnPosition(position);
-		}
 
 	}
 }

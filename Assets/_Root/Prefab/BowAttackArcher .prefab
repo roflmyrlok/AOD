@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 3813437202326424628}
   - component: {fileID: 5137337865557225917}
   m_Layer: 5
-  m_Name: ArcherSkillButton
+  m_Name: BowAttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
