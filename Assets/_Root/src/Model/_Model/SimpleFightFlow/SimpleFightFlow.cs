@@ -8,14 +8,19 @@ namespace Model
 {
     public class SimpleFightFlow : Fight, IInteractiveFightFlow
     {
-        public IFightFlowView View;
+        public IFightFlowView FightFlowView;
         private Character _currentCharacter;
         private List<Character> _charactersMadeMove;
 
         public SimpleFightFlow(Field currentFight, IFightFlowView view) : base(currentFight, view)
         {
-            View = view;
+            FightFlowView = view;
+            Debug.Log(view);
             _charactersMadeMove = new List<Character>();
+        }
+        
+        public void InitialiseSimpleFightFlow()
+        {
             SetCurrentCharacter();
         }
 
@@ -85,10 +90,6 @@ namespace Model
         }
         private void SetCurrentCharacter()
         {
-            if (_currentCharacter is not null)
-            {
-                Debug.Log("character " + _currentCharacter.GetCurrentPosition() + ", ended turn");   // this must be show in view
-            }
             var dict = CurrentFightField.GetCharactersBySpeed(); 
             _currentCharacter = dict
                 .Where(kvp => !_charactersMadeMove.Contains(kvp.Key))
@@ -97,7 +98,8 @@ namespace Model
                 .FirstOrDefault();
             if (_currentCharacter is not null)
             {
-                Debug.Log("new current character is " + _currentCharacter.GetCurrentPosition() + ", can make move");   // this must be show in view
+                Debug.Log("new current character is " + _currentCharacter.GetCurrentPosition() + ", can make move"); // this must be show in view
+                FightFlowView.CurrentCharacter(_currentCharacter);
             }
         }
 

@@ -9,57 +9,60 @@ using CharacterController = Controller.CharacterController;
 
 public class Starter : MonoBehaviour
 {
-	[SerializeField]
-	private List<CharacterView> characterPrefabs;
+    [SerializeField]
+    private List<CharacterView> characterPrefabs;
 
-	[SerializeField]
-	public IFightFlowView FightFlowView;
+    [SerializeField]
+    private SimpleFightFlowView fightFlowView;
 
-	[SerializeField]
-	private Transform charactersParent;
-	
-	private void Start()
-	{
-		var characterModels = new List<Character>
-		{
-			new Knight(),
-			new Archer(),
-			new Archer(),
-			new Archer(),
-			new Archer(),
-			new Archer(),
-			new Archer(),
-			new Archer()
-		};
+    [SerializeField]
+    private Transform charactersParent;
 
-		var fightFlow = new SimpleFightFlow(new Field(characterModels), FightFlowView);
+    private void Start()
+    {
+        var characterModels = new List<Character>
+        {
+            new Knight(),
+            new Archer(),
+            new Archer(),
+            new Archer(),
+            new Archer(),
+            new Archer(),
+            new Archer(),
+            new Archer()
+        };
 
-		foreach (var character in characterModels)
-		{
-			var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
-			if (prefab != null)
-			{
-				var charView = Instantiate(prefab, charactersParent);
-				character.InitViewAndStats(charView);
-		
-				var skillViews = charView.GetComponentsInChildren<ISkillView>(true).ToList();
-				character.InitSkillsAndSkillViews(skillViews);
+        var fightFlow = new SimpleFightFlow(new Field(characterModels), fightFlowView);
 
-				var characterController = charView.GetComponentInChildren<CharacterController>();
-				if (characterController != null)
-				{
-					var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
-					characterController.InitializeController(character, fightFlow, buttons);
-				}
-			}
-		}
+        foreach (var character in characterModels)
+        {
+            var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
+            if (prefab != null)
+            {
+                var charView = Instantiate(prefab, charactersParent);
+                character.InitViewAndStats(charView);
 
+                var skillViews = charView.GetComponentsInChildren<ISkillView>(true).ToList();
+                character.InitSkillsAndSkillViews(skillViews);
 
-		int position = 1;
-		foreach (var character in characterModels)
-		{
-			character.SetCurrentPosition(position);
-			position++;
-		}
-	}
+                var characterController = charView.GetComponentInChildren<CharacterController>();
+                if (characterController != null)
+                {
+                    var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
+                    characterController.InitializeController(character, fightFlow, buttons);
+                }
+
+                fightFlowView.RegisterCharacter(character, charView);
+            }
+        }
+
+        int position = 1;
+        foreach (var character in characterModels)
+        {
+            character.SetCurrentPosition(position);
+            position++;
+        }
+
+        fightFlow.InitialiseSimpleFightFlow();
+    }
 }
