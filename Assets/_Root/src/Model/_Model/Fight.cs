@@ -3,15 +3,15 @@ using Exception = System.Exception;
 
 namespace Model
 {
-	public class FightRound : IInteractiveFightRound
+	public class Fight : IInteractiveFight
 	{
 		private Field _currentFightField;
-		private IFightRoundView _fightRoundView;
+		private IFightView _fightView;
 
-		public FightRound(Field currentFightField, IFightRoundView fightRoundView)
+		public Fight(Field currentFightField, IFightView fightView)
 		{
 			_currentFightField = currentFightField;
-			_fightRoundView = fightRoundView;
+			_fightView = fightView;
 		}
 
 		public void ShowSkillTargets(int characterPosition, int skillPosition)
@@ -27,7 +27,7 @@ namespace Model
 					resultList.Add(target);
 				}
 			}
-			_fightRoundView.ShowTargetCharacters(resultList);
+			_fightView.ShowTargetCharacters(resultList);
 		}
 
 		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
@@ -61,6 +61,18 @@ namespace Model
 				tmp2.SetCurrentPosition(oldPosition);
 
 			}
+		}
+		
+		public Character GetCharacterAtPosition(int position)
+		{
+			// Check if the character is present at the given position
+			if (!_currentFightField.IsCharacterPresent(position))
+			{
+				return null; // Or throw an exception if preferred
+			}
+
+			// Retrieve the character at the position
+			return _currentFightField.GetCharacterOnPosition(position);
 		}
 
 	}

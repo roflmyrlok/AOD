@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace View
 {
-	public class FightRoundView : MonoBehaviour, IFightRoundView
+	public class FightView : MonoBehaviour, IFightView
 	{
-		private FightRound fightRound;
+		private Fight _fight;
 
 		private List<ICharacterView> activeCharacters = new List<ICharacterView>();
 		

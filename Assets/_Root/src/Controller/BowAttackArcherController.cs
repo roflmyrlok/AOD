@@ -9,7 +9,7 @@ public class BowAttackArcherController : SkillController<BowAttackArcher>
 {
 	private BowAttackArcher skill;
 
-	public override void InitializeController(List<Button> buttons, FightRound round, Character character)
+	public override void InitializeController(List<Button> buttons, Fight round, Character character)
 	{
 		skill = character.Skills.OfType<BowAttackArcher>().FirstOrDefault();
 
@@ -25,7 +25,7 @@ public class BowAttackArcherController : SkillController<BowAttackArcher>
 		}
 	}
 
-	private void OnSkillButtonClicked(FightRound round, Character character)
+	private void OnSkillButtonClicked(Fight round, Character character)
 	{
 		int position = character.GetCurrentPosition();
 		int skillPosition = character.Skills.IndexOf(skill);

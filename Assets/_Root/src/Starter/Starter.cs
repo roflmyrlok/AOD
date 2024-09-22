@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
+using UnityEngine.Serialization;
 using View;
 
 public class Starter : MonoBehaviour
@@ -10,8 +11,8 @@ public class Starter : MonoBehaviour
     [SerializeField]
     private List<CharacterView> characterPrefabs;
 
-    [SerializeField]
-    private FightRoundView fightRoundView;
+    [FormerlySerializedAs("fightRoundView")] [SerializeField]
+    private FightView fightView;
 
     [SerializeField]
     private Transform charactersParent;
@@ -50,7 +51,7 @@ public class Starter : MonoBehaviour
                         continue;
                     }
                     skillController.InitializeController(buttons.ToList(), 
-                        new FightRound(new Field(characterModels), fightRoundView), 
+                        new Fight(new Field(characterModels), fightView), 
                         character);
                 }
             }
