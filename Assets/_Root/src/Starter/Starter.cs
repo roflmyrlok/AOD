@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Model;
 using View;
+using Controller;
+using CharacterController = Controller.CharacterController;
 
 public class Starter : MonoBehaviour
 {
@@ -29,9 +31,9 @@ public class Starter : MonoBehaviour
             new Archer(),
             new Archer()
         };
-        
+
         InitializeCharacterSkills(characterModels);
-        
+
         foreach (var character in characterModels)
         {
             var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
@@ -40,18 +42,17 @@ public class Starter : MonoBehaviour
                 var charView = Instantiate(prefab, charactersParent);
                 character.InitView(charView);
                 
-                var skillControllers = charView.GetComponentsInChildren<SkillController>(true);
-                foreach (var skillController in skillControllers)
+                var characterController = charView.GetComponentInChildren<CharacterController>();
+                if (characterController != null)
                 {
-                    var buttons = skillController.GetComponentsInChildren<Button>(true);
-                    if (buttons.Length == 0)
-                    {
-                        Debug.LogError($"No buttons found in skill controller: {skillController.name}");
-                        continue;
-                    }
-                    skillController.InitializeController(buttons.ToList(), 
+                    var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
+                    characterController.InitializeController(character, 
                         new FightRound(new Field(characterModels), fightRoundView), 
-                        character);
+                        buttons);
+                }
+                else
+                {
+                    Debug.LogError($"No CharacterController found in prefab for {character.GetType().Name}");
                 }
             }
             else
