@@ -38,5 +38,16 @@ namespace Model
 
 			throw new Exception("Requested character is not present");
 		}
+
+		public Dictionary<Character, int> GetCharactersBySpeed()
+		{
+			var charSpeed = new Dictionary<Character, int>();
+			foreach (var character in characters)
+			{
+				charSpeed.Add(character, character.Speed);
+			}
+
+			return charSpeed;
+		}
 	}
 }

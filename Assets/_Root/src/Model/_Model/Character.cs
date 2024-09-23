@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace Model
 {
@@ -17,15 +18,10 @@ namespace Model
 
 		public Character()
 		{
-			Skills = new List<Skill>() {};
-			Name = "";
-			Attack = 0;
-			Defence = 0;
-			Speed = 0;
-			_currentPosition = Int32.MaxValue;
 		}
 
-		public abstract void InitView(ICharacterView view);
+		public abstract void InitViewAndStats(ICharacterView view);
+		public abstract void InitSkillsAndSkillViews(List<ISkillView> skillViews);
 
 		public void TakeDamage(float damage, Character performer)
 		{
@@ -103,14 +99,16 @@ namespace Model
 
 		protected override ICharacterView CharacterView => TypedView;
 
-		public override void InitView(ICharacterView view)
+		public override void InitViewAndStats(ICharacterView view)
 		{
 			if (view is not TView typed)
 			{
 				throw new Exception($"trying to assign {view} to Archer");
 			}
-
 			TypedView = typed;
 		}
+
+		public abstract override void InitSkillsAndSkillViews(List<ISkillView> skillViews);
+
 	}
 }

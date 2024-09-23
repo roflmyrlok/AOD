@@ -8,7 +8,7 @@ namespace View
         where TCharacter : Character
     {
         [SerializeField]
-        private Slider healthSlider; 
+        private Slider healthSlider;
 
         private Vector2[] screenPositions = new Vector2[8];
 
@@ -22,20 +22,20 @@ namespace View
             float screenWidth = Screen.width;
             float partWidth = screenWidth / 24f;
 
-            screenPositions[0] = GetMiddlePositionOfParts(4, 5, partWidth); 
-            screenPositions[1] = GetMiddlePositionOfParts(6, 7, partWidth); 
-            screenPositions[2] = GetMiddlePositionOfParts(8, 9, partWidth); 
-            screenPositions[3] = GetMiddlePositionOfParts(10, 11, partWidth); 
-            screenPositions[4] = GetMiddlePositionOfParts(14, 15, partWidth); 
-            screenPositions[5] = GetMiddlePositionOfParts(16, 17, partWidth); 
-            screenPositions[6] = GetMiddlePositionOfParts(18, 19, partWidth); 
-            screenPositions[7] = GetMiddlePositionOfParts(20, 21, partWidth); 
+            screenPositions[0] = GetMiddlePositionOfParts(4, 5, partWidth);
+            screenPositions[1] = GetMiddlePositionOfParts(6, 7, partWidth);
+            screenPositions[2] = GetMiddlePositionOfParts(8, 9, partWidth);
+            screenPositions[3] = GetMiddlePositionOfParts(10, 11, partWidth);
+            screenPositions[4] = GetMiddlePositionOfParts(14, 15, partWidth);
+            screenPositions[5] = GetMiddlePositionOfParts(16, 17, partWidth);
+            screenPositions[6] = GetMiddlePositionOfParts(18, 19, partWidth);
+            screenPositions[7] = GetMiddlePositionOfParts(20, 21, partWidth);
         }
 
         private Vector2 GetMiddlePositionOfParts(int part1, int part2, float partWidth)
         {
             float xPosition = (part1 + part2) / 2f * partWidth;
-            return new Vector2(xPosition, Screen.height / 2); 
+            return new Vector2(xPosition, Screen.height / 2);
         }
 
         public override bool IsViewFor(Character shape) => shape is TCharacter;
@@ -54,25 +54,16 @@ namespace View
 
         private void MoveCharacterToPosition(Transform characterTransform, int position, Canvas canvas)
         {
-            Vector2 targetScreenPosition = screenPositions[position - 1]; 
+            Vector2 targetScreenPosition = screenPositions[position - 1];
 
-            Vector3 worldPosition = canvas.worldCamera.ScreenToWorldPoint(new Vector3(targetScreenPosition.x,
-                targetScreenPosition.y, canvas.planeDistance));
-            
+            Vector3 worldPosition = canvas.worldCamera.ScreenToWorldPoint(new Vector3(targetScreenPosition.x, targetScreenPosition.y, canvas.planeDistance));
             characterTransform.position = new Vector3(worldPosition.x, worldPosition.y, characterTransform.position.z);
 
             foreach (Transform child in characterTransform.GetComponentsInChildren<Transform>())
             {
                 if (child.CompareTag("CharacterModel"))
                 {
-                    if (position >= 5 && position <= 8)
-                    {
-                        child.localRotation = Quaternion.Euler(0, 180, 0); 
-                    }
-                    else
-                    {
-                        child.localRotation = Quaternion.Euler(0, 0, 0); 
-                    }
+                    child.localRotation = position >= 5 && position <= 8 ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0, 0, 0);
                 }
             }
         }
@@ -98,12 +89,22 @@ namespace View
         {
             slider.value = value;
         }
+
+        public override void SetButtonsActive(bool isActive)
+        {
+            var buttons = GetComponentsInChildren<Button>(true);
+            foreach (var button in buttons)
+            {
+                button.gameObject.SetActive(isActive);
+            }
+        }
     }
 
     public abstract class CharacterView : MonoBehaviour, ICharacterView
-    { 
+    {
         public abstract bool IsViewFor(Character shape);
         public abstract void CharacterPositionChanged(int position);
         public abstract void CharacterHealthChanged(int currentHealth, int maxHealth);
+        public abstract void SetButtonsActive(bool isActive);
     }
 }

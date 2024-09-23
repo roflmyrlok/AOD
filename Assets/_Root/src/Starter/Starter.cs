@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Model;
 using View;
+using Controller;
+using CharacterController = Controller.CharacterController;
 
 public class Starter : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class Starter : MonoBehaviour
     private List<CharacterView> characterPrefabs;
 
     [SerializeField]
-    private FightRoundView fightRoundView;
+    private SimpleFightFlowView fightFlowView;
 
     [SerializeField]
     private Transform charactersParent;
@@ -29,62 +31,38 @@ public class Starter : MonoBehaviour
             new Archer(),
             new Archer()
         };
-        
-        InitializeCharacterSkills(characterModels);
-        
+
+        var fightFlow = new SimpleFightFlow(new Field(characterModels), fightFlowView);
+
         foreach (var character in characterModels)
         {
             var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
             if (prefab != null)
             {
                 var charView = Instantiate(prefab, charactersParent);
-                character.InitView(charView);
-                
-                var skillControllers = charView.GetComponentsInChildren<SkillController>(true);
-                foreach (var skillController in skillControllers)
+                character.InitViewAndStats(charView);
+
+                var skillViews = charView.GetComponentsInChildren<ISkillView>(true).ToList();
+                character.InitSkillsAndSkillViews(skillViews);
+
+                var characterController = charView.GetComponentInChildren<CharacterController>();
+                if (characterController != null)
                 {
-                    var buttons = skillController.GetComponentsInChildren<Button>(true);
-                    if (buttons.Length == 0)
-                    {
-                        Debug.LogError($"No buttons found in skill controller: {skillController.name}");
-                        continue;
-                    }
-                    skillController.InitializeController(buttons.ToList(), 
-                        new FightRound(new Field(characterModels), fightRoundView), 
-                        character);
+                    var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
+                    characterController.InitializeController(character, fightFlow, buttons);
                 }
-            }
-            else
-            {
-                throw new System.Exception($"There is no prefab for character: {character.GetType().Name}");
+
+                fightFlowView.RegisterCharacter(character, charView);
             }
         }
-        
+
         int position = 1;
         foreach (var character in characterModels)
         {
             character.SetCurrentPosition(position);
-            character.ChangeMaxHealth(100);
-            character.ChangeCurrentHealth(100);
-            character.Attack = 10;
             position++;
         }
-    }
 
-    private void InitializeCharacterSkills(List<Character> characterModels)
-    {
-        foreach (var character in characterModels)
-        {
-            if (character is Knight knight)
-            {
-                var swordAttackSkill = new SwordAttackKnight();
-                knight.Skills.Add(swordAttackSkill);
-            }
-            else if (character is Archer archer)
-            {
-                var bowAttackSkill = new BowAttackArcher();
-                archer.Skills.Add(bowAttackSkill);
-            }
-        }
+        fightFlow.InitialiseSimpleFightFlow();
     }
 }

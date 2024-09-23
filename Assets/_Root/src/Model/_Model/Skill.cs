@@ -22,7 +22,7 @@ namespace Model
 		protected TView TypedView { get; private set; } 
 
 		protected override ISkillView SkillView => TypedView;
-
+		
 		public override void InitView(ISkillView view)
 		{
 			if (view is not TView typed)
