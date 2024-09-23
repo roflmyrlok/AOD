@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Model
 {
 
-	public interface IFightRoundView
+	public interface IFightView
 	{
 		public void ShowTargetCharacters(List<int> targetPositions);
 	}
