@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
@@ -16,8 +15,16 @@ public class Starter : MonoBehaviour
     private SimpleFightFlowView fightFlowView;
 
     [SerializeField]
-    private Transform charactersParent;
-
+    private Transform playerCharParent;
+    
+    [SerializeField]
+    private Transform enemyCharParent;
+    
+    [SerializeField] 
+    private EnemyTeamView enemyTeamView;
+    
+    [SerializeField]
+    private PlayerTeamView playerTeamView;
     private void Start()
     {
         var characterModels = new List<Character>
@@ -26,43 +33,55 @@ public class Starter : MonoBehaviour
             new Archer(),
             new Archer(),
             new Archer(),
-            new Archer(),
+            new Knight(),
             new Archer(),
             new Archer(),
             new Archer()
         };
 
-        var fightFlow = new SimpleFightFlow(new Field(characterModels), fightFlowView);
+        var playerTeam = new Team(characterModels.GetRange(0, 4));
+        var enemyTeam = new Team(characterModels.GetRange(4, 4));
+
+        var fightFlow = new SimpleFightFlow(playerTeam, enemyTeam, fightFlowView);
+        
 
         foreach (var character in characterModels)
         {
             var prefab = characterPrefabs.FirstOrDefault(p => p.IsViewFor(character));
             if (prefab != null)
             {
-                var charView = Instantiate(prefab, charactersParent);
+                var isPlayerTeam = playerTeam.Contains(character);
+                var parent = isPlayerTeam ? playerCharParent : enemyCharParent;
+                var charView = Instantiate(prefab,  parent);
                 character.InitViewAndStats(charView);
-
                 var skillViews = charView.GetComponentsInChildren<ISkillView>(true).ToList();
                 character.InitSkillsAndSkillViews(skillViews);
-
+                
                 var characterController = charView.GetComponentInChildren<CharacterController>();
                 if (characterController != null)
-                {
-                    var buttons = charView.GetComponentsInChildren<Button>(true).ToList();
+                { 
+                    var buttons = charView.GetComponentsInChildren<UnityEngine.UI.Button>(true).ToList();
                     characterController.InitializeController(character, fightFlow, buttons);
                 }
 
+                if (isPlayerTeam)
+                {
+                    playerTeamView.RegisterCharacter(character, charView);
+                }
+                else
+                {
+                    enemyTeamView.RegisterCharacter(character, charView);
+                }
                 fightFlowView.RegisterCharacter(character, charView);
+            }
+            else
+            {
+                Debug.LogError($"Prefab for {character.GetType().Name} does not match the expected CharacterView type.");
             }
         }
 
-        int position = 1;
-        foreach (var character in characterModels)
-        {
-            character.SetCurrentPosition(position);
-            position++;
-        }
-
+        playerTeam.InitTeamView(playerTeamView);
+        enemyTeam.InitTeamView(enemyTeamView);
         fightFlow.InitialiseSimpleFightFlow();
     }
 }

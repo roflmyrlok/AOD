@@ -3,18 +3,13 @@ using System.Collections.Generic;
 
 namespace Model
 {
-	public abstract class Skill : IInteractiveSkill
+	public abstract class Skill
 	{
 		protected abstract ISkillView SkillView { get; }
-		protected List<int> PositionsCanTarget;
+		public List<Position> PositionsCanTarget { get; protected set; }
 		public string Name;
 		public abstract void InitView(ISkillView view);
-		public List<int> GetPositionsCanTarget()
-		{
-			return PositionsCanTarget;
-		}
-
-		public abstract void PerformSkill(Character performer, List<Character> targets);
+		public abstract void PerformSkill(Character performer, List<Position> targets, Team performerTeam, Team enemyTeam);
 	}
 	
 	public abstract class Skill<TView> : Skill where TView : ISkillView

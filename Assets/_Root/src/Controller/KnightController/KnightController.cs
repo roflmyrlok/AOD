@@ -7,14 +7,14 @@ namespace Controller
 {
 	public class KnightController : CharacterController<Knight>
 	{
-		protected override void InitializeCharacterSkills(IInteractiveFightFlow round, List<Button> buttons)
+		protected override void InitializeCharacterSkills(SimpleFightFlow simpleFightFlow, List<Button> buttons)
 		{
 			foreach (var skill in Character.Skills)
 			{
 				if (skill is SwordAttackKnight)
 				{
 					var swordAttackController = GetComponentInChildren<SwordAttackKnightController>(true);
-					swordAttackController.InitializeController(buttons, round, Character);
+					swordAttackController.InitializeController(buttons, simpleFightFlow, Character);
 				}
 			}
 		}

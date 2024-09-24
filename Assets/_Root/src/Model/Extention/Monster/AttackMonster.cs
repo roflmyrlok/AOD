@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Exception = System.Exception;
 
 namespace Model
 {
@@ -11,25 +12,25 @@ namespace Model
         public AttackMonster()
         {
             Name = "Monster attack";
-            PositionsCanTarget = new List<int> {1, 2, 3, 4};
+            PositionsCanTarget = new List<Position>();
+            PositionsCanTarget.Add(new Position(1, false));
+            PositionsCanTarget.Add(new Position(2, false));
+            PositionsCanTarget.Add(new Position(3, false));
+            PositionsCanTarget.Add(new Position(4, false));
+            
         }
 
-        public override void PerformSkill(Character performer, List<Character> targets)
+        public override void PerformSkill(Character performer, List<Position> targets, Team performerTeam, Team enemyTeam)
         {
-            if (targets.Count > 1)
-            {
-                throw new Exception("monster targets can't be more than 1!");
-            }
 			
             foreach (var target in targets)
             {
 				
-                if (!PositionsCanTarget.Contains(target.GetCurrentPosition()))
+                if (!PositionsCanTarget.Contains(target ))
                 {
-                    throw new Exception($"cant target character at position {target.GetCurrentPosition()}");
+                    throw new Exception("cant target character at position");
                 }
-                performer.DealAttackMultiDamage(_skillDamageMultiplier, target);
-                
+                performer.DealAttackMultiDamage(_skillDamageMultiplier, enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
                 //TypedView.ShowBowAttackPerformed(target);
             }
 			

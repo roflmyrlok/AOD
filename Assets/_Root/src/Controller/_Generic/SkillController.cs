@@ -7,11 +7,11 @@ namespace Controller
 {
 	public abstract class SkillController : MonoBehaviour
 	{
-		public abstract void InitializeController(List<Button> buttons, IInteractiveFightFlow round, Character character);
+		public abstract void InitializeController(List<Button> buttons, SimpleFightFlow fightFlow, Character character);
 	}
 
 	public abstract class SkillController<TSkill> : SkillController where TSkill : Skill
 	{
-		public abstract override void InitializeController(List<Button> buttons, IInteractiveFightFlow round, Character character);
+		public abstract override void InitializeController(List<Button> buttons, SimpleFightFlow fightFlow, Character character);
 	}
 }

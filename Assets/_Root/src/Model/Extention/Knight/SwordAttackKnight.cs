@@ -11,19 +11,23 @@ namespace Model
 		public SwordAttackKnight()
 		{
 			Name = "Sword Attack";
-			PositionsCanTarget = new List<int>() {5, 6};
+			PositionsCanTarget = new List<Position>();
+			PositionsCanTarget.Add(new Position(1,false));
+			PositionsCanTarget.Add(new Position(2, false));
 		}
 
-		public override void PerformSkill(Character performer, List<Character> targets)
+		public override void PerformSkill(Character performer, List<Position> targets, Team performerTeam, Team enemyTeam)
 		{
+			
 			foreach (var target in targets)
 			{
-				if (!PositionsCanTarget.Contains(target.GetCurrentPosition()))
+				
+				if (!PositionsCanTarget.Contains(target ))
 				{
-					throw new Exception($"{Name} cannot target position {target.GetCurrentPosition()}");
+					throw new Exception("cant target character at position");
 				}
-				performer.DealAttackMultiDamage(_skillDamageMultiplier, target);
-				//TypedView.ShowSwordAttackPerformed(target);
+				performer.DealAttackMultiDamage(_skillDamageMultiplier, enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
+				//TypedView.ShowBowAttackPerformed(target);
 			}
 			
 		}
