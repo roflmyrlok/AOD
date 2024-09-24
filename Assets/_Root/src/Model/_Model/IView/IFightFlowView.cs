@@ -2,7 +2,7 @@
 {
     public interface IFightFlowView : IFightView
     {
-        public void CurrentCharacter(Character character);
+        public void ShowCurrentCharacter(Character character);
         
     }
 }

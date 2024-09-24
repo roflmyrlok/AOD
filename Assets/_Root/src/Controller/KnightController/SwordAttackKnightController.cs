@@ -8,23 +8,22 @@ namespace Controller
 {
 	public class SwordAttackKnightController : SkillController<SwordAttackKnight>
 	{
-		public override void InitializeController(List<Button> buttons, IInteractiveFightFlow round, Character character)
+		public override void InitializeController(List<Button> buttons, SimpleFightFlow simpleFightFlow, Character character)
 		{
 			foreach (var button in buttons)
 			{
 				if (button.name == "SwordAttackButton")
 				{
-					button.onClick.AddListener(() => OnSkillButtonClicked(round, character));
+					button.onClick.AddListener(() => OnSkillButtonClicked(simpleFightFlow, character));
 				}
 			}
 		}
 
-		private void OnSkillButtonClicked(IInteractiveFightFlow round, Character character)
+		private void OnSkillButtonClicked(SimpleFightFlow simpleFightFlow, Character character)
 		{
-			int position = character.GetCurrentPosition();
 			int skillPosition = character.Skills.FindIndex(skill => skill is SwordAttackKnight);
-			var targetPositions = new List<int> { Random.Range(5, 6) };
-			round.TryUseCharacterSkill(position, skillPosition, targetPositions);
+			var targetPositions = new List<Position> { new Position( 1, false) };
+			simpleFightFlow.TryUseCharacterSkill(character, skillPosition, targetPositions);
 		}
 	}
 }

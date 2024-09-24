@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using NUnit.Framework;
 using UnityEngine;
 
 namespace Model
 {
-    public class SimpleFightFlow : Fight, IInteractiveFightFlow
+    public class SimpleFightFlow : Fight
     {
         public IFightFlowView FightFlowView;
         private Character _currentCharacter;
         private List<Character> _charactersMadeMove;
 
-        public SimpleFightFlow(Field currentFight, IFightFlowView view) : base(currentFight, view)
+        public SimpleFightFlow(Team playerTeam, Team enemyTeam, IFightFlowView view) : base(playerTeam, enemyTeam, view)
         {
             FightFlowView = view;
-            Debug.Log(view);
             _charactersMadeMove = new List<Character>();
         }
         
@@ -24,59 +21,27 @@ namespace Model
             SetCurrentCharacter();
         }
 
-        public bool TryShowSkillTargets(int characterPosition, int skillPosition)
+        public bool TryShowSkillTargets(Character character, int skillPosition)
         {
-            if (!CurrentFightField.IsCharacterPresent(characterPosition))
+            if (!_currentCharacter.Equals(character))
             {
                 return false;
             }
-
-            var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
-            if (_currentCharacter != character)
-            {
-                return false;
-            }
-            ShowSkillTargets(characterPosition, skillPosition);
+            ShowSkillTargets(character, skillPosition);
             return true;
-
         }
 
-        public bool TryUseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
+        public bool TryUseCharacterSkill(Character character, int skillPosition, List<Position> targetPosition)
         {
-            if (!CurrentFightField.IsCharacterPresent(characterPosition))
+            if (!_currentCharacter.Equals(character))
             {
                 return false;
             }
+            
+            UseCharacterSkill( character, skillPosition, targetPosition);
 
-            var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
-            if (_currentCharacter != character)
-            {
-                return false;
-            }
-            UseCharacterSkill(characterPosition, skillPosition, targetPosition);
             EndTurnWithCharacterAction(character);
             return true;
-        }
-
-        public bool TryCharacterChangePosition(int oldPosition, int newPosition)
-        {
-            if (!CurrentFightField.IsCharacterPresent(oldPosition))
-            {
-                return false;
-            }
-
-            var character = CurrentFightField.GetCharacterOnPosition(oldPosition);
-            if (_currentCharacter != character)
-            {
-                return false;
-            }
-            var positionCHanged = CharacterChangePosition(oldPosition, newPosition);
-            if (positionCHanged)
-            {
-                EndTurnWithCharacterAction(character);
-                return true;
-            }
-            return false;
         }
 
         private void EndTurnWithCharacterAction(Character character)
@@ -88,20 +53,25 @@ namespace Model
             }
             SetCurrentCharacter();
         }
+
         private void SetCurrentCharacter()
         {
-            var dict = CurrentFightField.GetCharactersBySpeed(); 
-            _currentCharacter = dict
+            // Combine characters from both teams
+            var allCharacters = PlayerTeam.GetCharactersBySpeed()
+                .Concat(EnemyTeam.GetCharactersBySpeed())
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value); // Combine into a single dictionary
+
+            _currentCharacter = allCharacters
                 .Where(kvp => !_charactersMadeMove.Contains(kvp.Key))
-                .OrderByDescending(kvp => kvp.Value) 
+                .OrderByDescending(kvp => kvp.Value) // Order by speed
                 .Select(kvp => kvp.Key)
                 .FirstOrDefault();
+
             if (_currentCharacter is not null)
             {
-                Debug.Log("new current character is " + _currentCharacter.GetCurrentPosition() + ", can make move"); // this must be show in view
-                FightFlowView.CurrentCharacter(_currentCharacter);
+                Debug.Log("New current character is " + _currentCharacter.Name + ", can make move"); // This must be shown in view
+                FightFlowView.ShowCurrentCharacter(_currentCharacter);
             }
         }
-
     }
 }

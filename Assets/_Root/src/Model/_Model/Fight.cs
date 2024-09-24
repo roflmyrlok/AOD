@@ -3,66 +3,61 @@ using Exception = System.Exception;
 
 namespace Model
 {
-	public abstract class Fight : IInteractiveFight
+	public abstract class Fight 
 	{
-		internal Field CurrentFightField;
+		public Team PlayerTeam { get; protected set; }
+		public Team EnemyTeam { get; protected set; }
 		internal IFightView FightView;
 
-		protected Fight(Field currentFightField, IFightView fightView)
+		protected Fight(Team playerTeam, Team enemyTeam, IFightView fightView)
 		{
-			CurrentFightField = currentFightField;
+			PlayerTeam = playerTeam;
+			EnemyTeam = enemyTeam;
 			FightView = fightView;
 		}
 
-		public void ShowSkillTargets(int characterPosition, int skillPosition)
+		public void ShowSkillTargets(Character performer, int skillPosition)
 		{
-			var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
-			var skill = character.GetAvailableSkills()[skillPosition];
-			var targets = skill.GetPositionsCanTarget();
-			var resultList = new List<int>();
-			foreach (var target in targets)
-			{
-				if (CurrentFightField.IsCharacterPresent(target))
-				{
-					resultList.Add(target);
-				}
-			}
-			FightView.ShowTargetCharacters(resultList);
+			var targets = performer.Skills[skillPosition - 1].PositionsCanTarget;
+			FightView.ShowTargetCharacters(targets, performer);
 		}
 
-		public void UseCharacterSkill(int characterPosition, int skillPosition, List<int> targetPosition)
+		public void UseCharacterSkill(Character performer, int skillPosition, List<Position> targetPosition)
 		{
-			var character = CurrentFightField.GetCharacterOnPosition(characterPosition);
-			var skill = character.GetAvailableSkills()[skillPosition];
-			var targets = new List<Character>();
-			foreach (var pos in targetPosition)
+			bool isPlayerTeam;
+			if (PlayerTeam.Contains(performer))
 			{
-				targets.Add(CurrentFightField.GetCharacterOnPosition(pos));
+				isPlayerTeam = true;
 			}
-			skill.PerformSkill(character, targets);
-		}
-
-		public bool CharacterChangePosition(int oldPosition, int newPosition)
-		{
-			if (!CurrentFightField.IsCharacterPresent(oldPosition))
+			else if (EnemyTeam.Contains(performer))
 			{
-				return false;
-			}
-
-			if (!CurrentFightField.IsCharacterPresent(newPosition))
-			{
-				CurrentFightField.GetCharacterOnPosition(oldPosition).SetCurrentPosition(newPosition);
+				isPlayerTeam = false;
 			}
 			else
 			{
-				var tmp1 = CurrentFightField.GetCharacterOnPosition(oldPosition);
-				var tmp2 = CurrentFightField.GetCharacterOnPosition(newPosition);
-				tmp1.SetCurrentPosition(newPosition);
-				tmp2.SetCurrentPosition(oldPosition);
+				throw new Exception("no char");
 			}
-			return true;
+			
+			var performerTeam = isPlayerTeam ? PlayerTeam : EnemyTeam;
+			var enemyTeam = isPlayerTeam ? EnemyTeam : PlayerTeam;
+			var skill = performer.Skills[skillPosition];
+			skill.PerformSkill(performer,targetPosition, performerTeam, enemyTeam);
 		}
 		
-
+		public bool TryCharacterChangePositionInTeam(Character character, Position newPosition)
+		{
+			if (PlayerTeam.Contains(character))
+			{
+				return PlayerTeam.TryCharacterChangePosition(character, newPosition);
+			}
+			else if (EnemyTeam.Contains(character))
+			{
+				return EnemyTeam.TryCharacterChangePosition(character, newPosition);
+			}
+			else
+			{
+				throw new Exception("no char");
+			}
+		}
 	}
 }

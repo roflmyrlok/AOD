@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Model
 {
-	public abstract class Character : IInteractiveCharacter
+	public abstract class Character
 	{
 		protected abstract ICharacterView CharacterView { get; }
 		public string Name;
@@ -13,7 +13,6 @@ namespace Model
 		public int Attack;
 		public int Defence;
 		public int Speed;
-		private int _currentPosition;
 		public List<Skill> Skills;
 
 		public Character()
@@ -44,26 +43,6 @@ namespace Model
 		public bool IsAlive()
 		{
 			return GetCurrentHealth() != 0;
-		}
-
-		public List<Skill> GetAvailableSkills()
-		{
-			return Skills;
-		}
-
-		public bool IsAvailableSkill(Skill skill)
-		{
-			return Skills.Contains(skill);
-		}
-
-		public int GetCurrentPosition()
-		{
-			return _currentPosition;
-		}
-		public void SetCurrentPosition(int newPosition)
-		{
-			_currentPosition = newPosition;
-			CharacterView.CharacterPositionChanged(_currentPosition);
 		}
 
 		public void ChangeCurrentHealth(int newValue)
