@@ -12,7 +12,7 @@ namespace View
 		public void RegisterCharacter(Character character, CharacterView characterView)
 		{
 			_characterViews[character] = characterView;
-			characterView.SetButtonsActive(false);
+			characterView.SetButtonsState(false);
 		}
 		
 		public void ShowCurrentCharacter(Character character)
@@ -34,7 +34,7 @@ namespace View
 			foreach (var kvp in _characterViews)
 			{
 				var isActive = kvp.Key == activeCharacter;
-				kvp.Value.SetButtonsActive(isActive);
+				kvp.Value.SetButtonsState(isActive);
 			}
 		}
 
