@@ -25,7 +25,8 @@ namespace Controller
 		{
 			int skillPosition = character.Skills.FindIndex(skill => skill is BowAttackArcher);
 			var targetPositions = new List<Position> { new (3, false) };
-			fightFlow.TryUseCharacterSkill(character, skillPosition, targetPositions);
+			//fightFlow.TryUseCharacterSkill(character, skillPosition, targetPositions);
+			fightFlow.TryShowSkillTargets(character, skillPosition);
 		}
 	}
 }
