@@ -1,8 +1,7 @@
-using Model;
-
-public interface ICharacterView
+namespace Model
 {
-	bool IsViewFor(Character shape);
-	void CharacterHealthChanged(int currentHealth, int maxHealth);
-	void SetButtonsActive(bool isActive);
+	public interface ICharacterView
+	{
+		void CharacterHealthChanged(int currentHealth, int maxHealth);
+	}
 }
