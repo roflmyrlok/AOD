@@ -25,6 +25,10 @@ public class Starter : MonoBehaviour
     
     [SerializeField]
     private PlayerTeamView playerTeamView;
+
+    [SerializeField] 
+    private TargetManager targetManager;
+    
     private void Start()
     {
         var characterModels = new List<Character>

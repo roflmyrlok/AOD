@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace View
 {
-	public class ButtonManager : MonoBehaviour
+	public class SkillButtonManager : MonoBehaviour
 	{
 		public void PutButtonsToTheLayout(Dictionary<Button, GameObject> buttonReturnParentDict)
 		{

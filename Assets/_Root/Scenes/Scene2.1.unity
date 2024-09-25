@@ -172,6 +172,7 @@ MonoBehaviour:
   enemyCharParent: {fileID: 566360250}
   enemyTeamView: {fileID: 8582263830382318920}
   playerTeamView: {fileID: 8292840559345647028}
+  targetManager: {fileID: 542976177}
 --- !u!114 &26157364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +185,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a674dbc15175486eba4990d875ad64e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &225700205
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 225700206}
+  m_Layer: 5
+  m_Name: CancelInputMode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &225700206
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225700205}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1867764886}
+  m_Father: {fileID: 267708431}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &267708427
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +322,7 @@ RectTransform:
   - {fileID: 1764840671}
   - {fileID: 6149166555014894841}
   - {fileID: 542976176}
-  - {fileID: 1867764886}
+  - {fileID: 225700206}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -620,7 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9908d3943ad64d2cbed8e72831ef6055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cancelInputMode: {fileID: 1867764885}
+  cancelInputMode: {fileID: 225700205}
   parentTarget: {fileID: 581900447}
   targetViewPrefab: {fileID: 450584523597600460, guid: e8e22a167dbf74b5d828f3576dc9abcd, type: 3}
 --- !u!4 &566360250 stripped
@@ -1153,7 +1190,7 @@ GameObject:
   - component: {fileID: 1867764888}
   - component: {fileID: 1867764887}
   m_Layer: 5
-  m_Name: CancelInputMode
+  m_Name: CancelInputModeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,17 +1203,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867764885}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 275951444}
-  m_Father: {fileID: 267708431}
+  m_Father: {fileID: 225700206}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 80, y: -15}
+  m_AnchoredPosition: {x: -288.75, y: 150.25}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1867764887
@@ -1222,7 +1259,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1867764888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &1867764888
 MonoBehaviour:
   m_ObjectHideFlags: 0

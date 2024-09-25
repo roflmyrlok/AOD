@@ -76,9 +76,9 @@ namespace View
 
 			if (parentCanvas != null)
 			{
-				ButtonManager buttonManager = parentCanvas.GetComponentInChildren<ButtonManager>();
+				SkillButtonManager skillButtonManager = parentCanvas.GetComponentInChildren<SkillButtonManager>();
 
-				if (buttonManager != null)
+				if (skillButtonManager != null)
 				{
 					Dictionary<Button, GameObject> buttonReturnParentDict = new Dictionary<Button, GameObject>();
 
@@ -96,7 +96,7 @@ namespace View
 
 					if (isActive)
 					{
-						buttonManager.PutButtonsToTheLayout(buttonReturnParentDict);
+						skillButtonManager.PutButtonsToTheLayout(buttonReturnParentDict);
 					}
 				}
 			}
