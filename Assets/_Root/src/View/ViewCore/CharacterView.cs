@@ -11,6 +11,11 @@ namespace View
         public abstract void RotateCharacterModel();
         public abstract void CharacterHealthChanged(int currentHealth, int maxHealth);
         public abstract void SetButtonsActive(bool isActive);
+
+        public Vector3 GetPosition()
+        {
+            return transform.position;
+        }
     }
     
     public abstract class CharacterView<TCharacter> : CharacterView

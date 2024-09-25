@@ -7,9 +7,9 @@ namespace View
 {
 	public class SimpleFightFlowView : MonoBehaviour, IFightFlowView
 	{
-		private readonly Dictionary<Character, ICharacterView> _characterViews = new Dictionary<Character, ICharacterView>();
+		private readonly Dictionary<Character, CharacterView> _characterViews = new Dictionary<Character, CharacterView>();
 
-		public void RegisterCharacter(Character character, ICharacterView characterView)
+		public void RegisterCharacter(Character character, CharacterView characterView)
 		{
 			_characterViews[character] = characterView;
 			characterView.SetButtonsActive(false);
@@ -22,6 +22,15 @@ namespace View
 
 		private void UpdateActiveCharacterUI(Character activeCharacter)
 		{
+			
+			foreach (RectTransform child in GetComponentInChildren<RectTransform>(true))
+			{
+				if (child.CompareTag("ActiveCharacterMark"))
+				{
+					child.transform.position = _characterViews[activeCharacter].transform.position;
+				}
+			}
+			
 			foreach (var kvp in _characterViews)
 			{
 				var isActive = kvp.Key == activeCharacter;
