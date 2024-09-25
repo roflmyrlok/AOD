@@ -10,7 +10,6 @@ namespace View
 			foreach (var entry in characterPositions)
 			{
 				var transformSearchString = entry.Key.Index.ToString();
-				transformSearchString += "E";
 				var transform = PositionMapping[transformSearchString];
 				var characterView = CharacterViews[entry.Value]; 
 				characterView.ChangePosition(transform);

@@ -8,7 +8,7 @@ namespace View
 {
 	public abstract class TeamView : MonoBehaviour, ITeamView
 	{
-		protected Dictionary<string, Vector3> PositionMapping;
+		public Dictionary<string, Vector3> PositionMapping { get; protected set; }
 		[ItemCanBeNull] protected Dictionary<Character, CharacterView> CharacterViews;
 
 		public void Awake()

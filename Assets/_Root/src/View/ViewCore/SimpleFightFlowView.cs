@@ -38,9 +38,15 @@ namespace View
 			}
 		}
 
-		public void ShowTargetCharacters(List<Model.Position> targets, Character performer)
+		public void ShowTargetCharacters( Character performer, Skill skill)
 		{
-			
+			Canvas parentCanvas = GetComponentInParent<Canvas>();
+
+			if (parentCanvas != null)
+			{
+				TargetManager targetManager = parentCanvas.GetComponentInChildren<TargetManager>();
+				targetManager.ShowTarget(_characterViews[performer], skill.PositionsCanTarget);
+			}
 		}
 	}
 }

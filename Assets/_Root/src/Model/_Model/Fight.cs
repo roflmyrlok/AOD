@@ -18,8 +18,8 @@ namespace Model
 
 		public void ShowSkillTargets(Character performer, int skillPosition)
 		{
-			var targets = performer.Skills[skillPosition - 1].PositionsCanTarget;
-			FightView.ShowTargetCharacters(targets, performer);
+			
+			FightView.ShowTargetCharacters(performer, performer.Skills[skillPosition]);
 		}
 
 		public void UseCharacterSkill(Character performer, int skillPosition, List<Position> targetPosition)
