@@ -67,8 +67,12 @@ namespace Model
 
             if (_currentCharacter is not null)
             {
-                Debug.Log("New current character is " + _currentCharacter.Name + ", can make move"); // This must be shown in view
                 FightFlowView.ShowCurrentCharacter(_currentCharacter);
+            }
+            if (_currentCharacter is null)
+            {
+                _charactersMadeMove.Clear();
+                SetCurrentCharacter();
             }
         }
     }

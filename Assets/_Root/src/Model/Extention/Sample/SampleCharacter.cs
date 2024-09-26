@@ -16,11 +16,6 @@ namespace Model
 		{
 			base.InitViewAndStats(view);
 			Name = "Sample";
-			ChangeMaxHealth(0);
-			ChangeCurrentHealth(0);
-			Attack = 0;
-			Defence = 0;
-			Speed = 0;
 			Skills = new List<Skill>();
 		}
 		

@@ -23,7 +23,6 @@ namespace Controller
 		{
 			var skill = character.Skills.FirstOrDefault(skill => skill is SwordAttackKnight);
 			var skillIndex = skill.Index;
-			Debug.Log(skillIndex);
 			simpleFightFlow.ShowSkillTargets(character, skillIndex);
 		}
 	}
