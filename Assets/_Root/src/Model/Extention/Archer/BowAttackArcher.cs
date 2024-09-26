@@ -13,6 +13,8 @@ namespace Model
 		{
 			Name = "Bow attack";
 			PositionsCanTarget = new List<Position>();
+			PositionsCanTarget.Add(new Position(1, false));
+			PositionsCanTarget.Add(new Position(2, false));
 			PositionsCanTarget.Add(new Position(4, false));
 			PositionsCanTarget.Add(new Position(3, false));
 			Index = 1;
@@ -26,7 +28,11 @@ namespace Model
 				{
 					throw new Exception("cant target character at position");
 				}
-				performer.DealAttackMultiDamage(_skillDamageMultiplier, enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
+
+				performer.DealAttackMultiDamage(_skillDamageMultiplier,
+					target.IsPlayerTeam
+						? performerTeam.GetCharacterByPosition(target)
+						: enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
 				//TypedView.ShowBowAttackPerformed(target);
 			}
 			
