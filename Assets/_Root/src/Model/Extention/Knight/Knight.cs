@@ -6,15 +6,19 @@ namespace Model
 {
 	public class Knight : Character<IKnightView>
 	{
+		public Knight() : base()
+		{
+			
+		}
 		public override void InitViewAndStats(ICharacterView view)
 		{
 			base.InitViewAndStats(view);
 			Name = "Knight";
-			ChangeMaxHealth(200);
-			ChangeCurrentHealth(200);
-			Attack = 8;
-			Defence = 0;
-			Speed = 5;
+			CharacterStats.SetMaxHealth(150);
+			CharacterStats.SetHealth(150);
+			CharacterStats.SetAttack(15);
+			CharacterStats.SetDefence(0);
+			CharacterStats.SetSpeed(6);
 			Skills = new List<Skill>();
 		}
 		

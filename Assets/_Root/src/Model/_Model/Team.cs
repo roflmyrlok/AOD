@@ -11,12 +11,14 @@ namespace Model
         private readonly Dictionary<Position, Character> _characterPositions;
         private ITeamView _teamView;
         [CanBeNull] private Team _opposingTeam;
+
         public Team(List<Character> characters)
         {
             _characterPositions = new Dictionary<Position, Character>();
             for (int i = 0; i < characters.Count; i++)
             {
-                _characterPositions[new Position( i + 1,true)] = characters[i];
+                _characterPositions[new Position(i + 1, true)] = characters[i];
+                characters[i].ImDead += OnCharacterDead; // Add ImDead event listener
             }
         }
 
@@ -26,12 +28,21 @@ namespace Model
             _teamView.UpdatedCharacterPositions(_characterPositions);
         }
 
+        private void OnCharacterDead(object sender, EventArgs e)
+        {
+            if (sender is Character character && Contains(character))
+            {
+                RemoveCharacterFromTeam(character);
+            }
+        }
+
         public bool IsCharacterPresent(Position position)
         {
             return _characterPositions.ContainsKey(position);
         }
 
-        public Character GetCharacterByPosition(Position position)
+        [CanBeNull]
+        public Character  GetCharacterByPosition(Position position)
         {
             if (position.IsPlayerTeam && _characterPositions.TryGetValue(position, out var character))
             {
@@ -54,15 +65,15 @@ namespace Model
 
         public Dictionary<Character, int> GetCharactersBySpeed()
         {
-            return new Dictionary<Character, int>(_characterPositions.Select(kvp => new KeyValuePair<Character, int>(kvp.Value, kvp.Value.Speed)));
+            return new Dictionary<Character, int>(_characterPositions.Select(kvp => new KeyValuePair<Character, int>(kvp.Value, kvp.Value.CharacterStats.Speed)));
         }
 
-        public bool TryCharacterChangePosition(Character character,Position newPosition)
+        public bool TryCharacterChangePosition(Character character, Position newPosition)
         {
             var oldPosition = GetPositionByCharacter(character);
             if (!_characterPositions.ContainsKey(oldPosition))
             {
-                return false; 
+                return false;
             }
 
             var characterAtOldPosition = _characterPositions[oldPosition];
@@ -87,6 +98,18 @@ namespace Model
         public bool Contains(Character character)
         {
             return _characterPositions.ContainsValue(character);
+        }
+
+        private void RemoveCharacterFromTeam(Character character)
+        {
+            var position = GetPositionByCharacter(character);
+
+            if (position != null && _characterPositions.ContainsKey(position))
+            {
+                _characterPositions.Remove(position);
+                _teamView.RemoveCharacterFromTeam(character);
+                _teamView.UpdatedCharacterPositions(_characterPositions);
+            }
         }
     }
 }

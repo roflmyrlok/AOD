@@ -6,18 +6,13 @@ namespace Model
 {
 	public class Monster : Character<IMonsterView>
 	{
-		public Monster() 
+		public Monster() : base()
 		{
 		}
 		public override void InitViewAndStats(ICharacterView view)
 		{
 			base.InitViewAndStats(view);
 			Name = "Monster";
-			ChangeMaxHealth(100);
-			ChangeCurrentHealth(100);
-			Attack = 10;
-			Defence = 0;
-			Speed = 0;
 			Skills = new List<Skill>();
 		}
 		

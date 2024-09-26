@@ -1,21 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Model
 {
-	using System;
-
 	public class Archer : Character<IArcherView>
 	{
+		public Archer() : base(){
+		}
+
 		public override void InitViewAndStats(ICharacterView view)
 		{
 			base.InitViewAndStats(view);
 			Name = "Archer";
-			ChangeMaxHealth(100);
-			ChangeCurrentHealth(100);
-			Attack = 10;
-			Defence = 0;
-			Speed = 10;
+
+			CharacterStats.SetMaxHealth(100);
+			CharacterStats.SetHealth(100);
+			CharacterStats.SetAttack(30);
+			CharacterStats.SetDefence(0);
+			CharacterStats.SetSpeed(10);
+
 			Skills = new List<Skill>();
 		}
 
@@ -32,6 +36,5 @@ namespace Model
 				throw new Exception("BowAttackArcherView not found in skill views");
 			}
 		}
-
 	}
 }
