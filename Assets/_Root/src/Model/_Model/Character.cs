@@ -40,7 +40,7 @@ namespace Model
 
         public void DealAttackMultiDamage(float multiplier, Character target)
         {
-            target.TakeDamage(CharacterStats.Attack * multiplier, this);
+            target?.TakeDamage(CharacterStats.Attack * multiplier, this);
         }
 
         public void IsAlive()
@@ -48,6 +48,7 @@ namespace Model
             if (CharacterStats.Health == 0)
             {
                 ImDead?.Invoke(this, EventArgs.Empty);
+                CharacterView.CharacterDead();
             }
         }
     }

@@ -28,9 +28,12 @@ namespace View
 		}
 
 		public abstract void UpdatedCharacterPositions(Dictionary<Position, Character> characterPositions);
+		
 		public void RemoveCharacterFromTeam(Character character)
 		{
 			CharacterViews.Remove(character);
 		}
+
+		public abstract void Rotate(CharacterView characterView);
 	}
 }

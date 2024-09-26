@@ -40,15 +40,10 @@ namespace Model
         {
             return _characterPositions.ContainsKey(position);
         }
-
-        [CanBeNull]
+        
         public Character  GetCharacterByPosition(Position position)
         {
-            if (position.IsPlayerTeam && _characterPositions.TryGetValue(position, out var character))
-            {
-                return character;
-            }
-            throw new Exception($"No character found at position {position}");
+            return _characterPositions.TryGetValue(position, out var characterPosition) ? characterPosition : null;
         }
         
         public Position GetPositionByCharacter(Character character)

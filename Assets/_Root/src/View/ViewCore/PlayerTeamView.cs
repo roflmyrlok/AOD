@@ -15,6 +15,11 @@ namespace View
 				characterView.ChangePosition(transform);
 			}
 		}
+		
+		public override void Rotate(CharacterView characterView)
+		{
+			
+		}
 	}
 }
 
