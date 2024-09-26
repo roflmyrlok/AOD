@@ -15,6 +15,7 @@ namespace Model
 			PositionsCanTarget = new List<Position>();
 			PositionsCanTarget.Add(new Position(4, false));
 			PositionsCanTarget.Add(new Position(3, false));
+			Index = 1;
 		}
 
 		public override void PerformSkill(Character performer, List<Position> targets, Team performerTeam, Team enemyTeam)

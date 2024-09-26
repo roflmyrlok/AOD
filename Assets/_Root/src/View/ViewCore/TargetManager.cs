@@ -31,7 +31,7 @@ namespace View
 			cancelInputMode.GetComponentInChildren<Button>().onClick.AddListener(CancelInputMode);
 		}
 
-		public void ShowTarget(CharacterView characterView, Skill skill)
+		public void ShowTarget(CharacterView characterView, Character performer, Skill skill, Action<Character, int, List<Model.Position>> skillToPerform)
 		{
 			var canvas = characterView.GetComponentInParent<Canvas>();
 			var playerTeam = canvas.GetComponentInChildren<PlayerTeamView>();
@@ -69,11 +69,10 @@ namespace View
 
 				var buttonOfTargetView = targetView.GetComponentInChildren<Button>();
 				
-				// here is logic to call skill onClick of targetView button with position pos skill skill
+				// here is logic to call skill onClick of characterView button with position pos skill skill
 				
-				//characterView.GetComponentInChildren(CharacterController.FindAnyObjectByType())
-				
-				buttonOfTargetView.onClick.AddListener(CancelInputMode); //add CancelInputMode()
+				buttonOfTargetView.onClick.AddListener(() => skillToPerform(performer, 1, new List<Position>{pos})); 
+				buttonOfTargetView.onClick.AddListener(CancelInputMode); 
 
 				
 				targetView.transform.position = pos.IsPlayerTeam ?
@@ -120,9 +119,8 @@ namespace View
 				targetView.DestroyGameObject();
 			}
 
-			_activeTargetViews = new List<TargetView>();
-
-			_tempDisabledButtons = new List<Button>();
+			_activeTargetViews.Clear();
+			_tempDisabledButtons.Clear();
 
 			cancelInputMode.SetActive(false);
 			

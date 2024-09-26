@@ -9,7 +9,7 @@ namespace Controller
 	public abstract class CharacterController<TCharacter> : CharacterController
 		where TCharacter : Character
 	{
-		public TCharacter Character { get; private set; }
+		protected TCharacter Character { get; private set; }
 
 		public override void InitializeController(Character character, SimpleFightFlow fightFlow, List<Button> buttons)
 		{
