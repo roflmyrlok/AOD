@@ -25,27 +25,27 @@ namespace Model
 
 		public virtual void UseCharacterSkill(Character performer, int skillIndex, List<Position> targetPosition)
 		{
-			bool isPlayerTeam;
+			bool isPerformerTeam;
 			if (PlayerTeam.Contains(performer))
 			{
-				isPlayerTeam = true;
+				isPerformerTeam = true;
 			}
 			else if (EnemyTeam.Contains(performer))
 			{
-				isPlayerTeam = false;
+				isPerformerTeam = false;
 			}
 			else
 			{
 				throw new Exception("no char");
 			}
 			
-			var performerTeam = isPlayerTeam ? PlayerTeam : EnemyTeam;
-			var enemyTeam = isPlayerTeam ? EnemyTeam : PlayerTeam;
+			var performerTeam = isPerformerTeam ? PlayerTeam : EnemyTeam;
+			var enemyTeam = isPerformerTeam ? EnemyTeam : PlayerTeam;
 			var skill = performer.Skills.FirstOrDefault(s => s.Index == skillIndex);
 			skill.PerformSkill(performer,targetPosition, performerTeam, enemyTeam);
 		}
 		
-		public bool TryCharacterChangePositionInTeam(Character character, Position newPosition)
+		/*public bool TryCharacterChangePositionInTeam(Character character, Position newPosition)
 		{
 			if (PlayerTeam.Contains(character))
 			{
@@ -59,6 +59,6 @@ namespace Model
 			{
 				throw new Exception("no char");
 			}
-		}
+		}*/
 	}
 }

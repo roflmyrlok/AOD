@@ -31,7 +31,10 @@ namespace Model
                 {
                     throw new Exception("cant target character at position");
                 }
-                performer.DealAttackMultiDamage(_skillDamageMultiplier, enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
+                performer.DealAttackMultiDamage(_skillDamageMultiplier,
+                    target.IsPlayerTeam
+                        ? performerTeam.GetCharacterByPosition(target)
+                        : enemyTeam.GetCharacterByPosition(target.OpposingPosition()));
                 //TypedView.ShowBowAttackPerformed(target);
             }
 			
