@@ -8,6 +8,7 @@ namespace View
 	public class SimpleFightFlowView : MonoBehaviour, IFightFlowView
 	{
 		private readonly Dictionary<Character, CharacterView> _characterViews = new Dictionary<Character, CharacterView>();
+		
 
 		public void RegisterCharacter(Character character, CharacterView characterView)
 		{
@@ -45,7 +46,7 @@ namespace View
 			if (parentCanvas != null)
 			{
 				TargetManager targetManager = parentCanvas.GetComponentInChildren<TargetManager>();
-				targetManager.ShowTarget(_characterViews[performer], skill.PositionsCanTarget);
+				targetManager.ShowTarget(_characterViews[performer], skill);
 			}
 		}
 	}
