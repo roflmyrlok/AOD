@@ -14,7 +14,13 @@ namespace View
 				var characterView = CharacterViews[entry.Value]; 
 				characterView.ChangePosition(transform);
 				characterView.RotateCharacterModel();
+				
 			}
+		}
+
+		public override void Rotate(CharacterView characterView)
+		{
+			characterView.RotateCharacterModel();
 		}
 	}
 }
