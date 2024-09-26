@@ -6,6 +6,8 @@ namespace Model
 	public abstract class Skill
 	{
 		protected abstract ISkillView SkillView { get; }
+		
+		public int Index { get; protected set; }
 		public List<Position> PositionsCanTarget { get; protected set; }
 		public string Name;
 		public abstract void InitView(ISkillView view);

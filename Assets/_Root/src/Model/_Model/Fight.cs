@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Exception = System.Exception;
 
 namespace Model
@@ -16,13 +17,13 @@ namespace Model
 			FightView = fightView;
 		}
 
-		public void ShowSkillTargets(Character performer, int skillPosition)
+		public virtual void ShowSkillTargets(Character performer, int skillIndex)
 		{
 			
-			FightView.ShowTargetCharacters(performer, performer.Skills[skillPosition]);
+			FightView.ShowTargetCharacters(performer, performer.Skills.FirstOrDefault(s => s.Index == skillIndex), UseCharacterSkill);
 		}
 
-		public void UseCharacterSkill(Character performer, int skillPosition, List<Position> targetPosition)
+		public virtual void UseCharacterSkill(Character performer, int skillIndex, List<Position> targetPosition)
 		{
 			bool isPlayerTeam;
 			if (PlayerTeam.Contains(performer))
@@ -40,7 +41,7 @@ namespace Model
 			
 			var performerTeam = isPlayerTeam ? PlayerTeam : EnemyTeam;
 			var enemyTeam = isPlayerTeam ? EnemyTeam : PlayerTeam;
-			var skill = performer.Skills[skillPosition];
+			var skill = performer.Skills.FirstOrDefault(s => s.Index == skillIndex);
 			skill.PerformSkill(performer,targetPosition, performerTeam, enemyTeam);
 		}
 		

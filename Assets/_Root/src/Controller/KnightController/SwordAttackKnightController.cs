@@ -21,9 +21,10 @@ namespace Controller
 
 		private void OnSkillButtonClicked(SimpleFightFlow simpleFightFlow, Character character)
 		{
-			int skillPosition = character.Skills.FindIndex(skill => skill is SwordAttackKnight);
-			var targetPositions = new List<Position> { new Position( 1, false) };
-			simpleFightFlow.TryUseCharacterSkill(character, skillPosition, targetPositions);
+			var skill = character.Skills.FirstOrDefault(skill => skill is SwordAttackKnight);
+			var skillIndex = skill.Index;
+			Debug.Log(skillIndex);
+			simpleFightFlow.ShowSkillTargets(character, skillIndex);
 		}
 	}
 }

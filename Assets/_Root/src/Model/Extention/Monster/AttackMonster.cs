@@ -17,6 +17,7 @@ namespace Model
             PositionsCanTarget.Add(new Position(2, false));
             PositionsCanTarget.Add(new Position(3, false));
             PositionsCanTarget.Add(new Position(4, false));
+            Index = 1;
             
         }
 

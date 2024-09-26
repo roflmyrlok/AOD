@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Model;
 using UnityEngine;
@@ -38,15 +39,15 @@ namespace View
 				kvp.Value.SetButtonsState(isActive);
 			}
 		}
-
-		public void ShowTargetCharacters( Character performer, Skill skill)
+		
+		public void ShowTargetCharacters(Character performer, Skill skill, Action<Character, int, List<Model.Position>> skillToPerform)
 		{
 			Canvas parentCanvas = GetComponentInParent<Canvas>();
 
 			if (parentCanvas != null)
 			{
 				TargetManager targetManager = parentCanvas.GetComponentInChildren<TargetManager>();
-				targetManager.ShowTarget(_characterViews[performer], skill);
+				targetManager.ShowTarget(_characterViews[performer], performer, skill, skillToPerform);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,27 +22,24 @@ namespace Model
             SetCurrentCharacter();
         }
 
-        public bool TryShowSkillTargets(Character character, int skillPosition)
+        public override void ShowSkillTargets(Character character, int skillIndex)
         {
             if (!_currentCharacter.Equals(character))
             {
-                return false;
+                throw new Exception("bruh");
             }
-            ShowSkillTargets(character, skillPosition);
-            return true;
+            FightView.ShowTargetCharacters(character, character.Skills.FirstOrDefault(s => s.Index == skillIndex), UseCharacterSkill);
         }
-
-        public bool TryUseCharacterSkill(Character character, int skillPosition, List<Position> targetPosition)
+        public override void UseCharacterSkill(Character character, int skillIndex, List<Position> targetPosition)
         {
             if (!_currentCharacter.Equals(character))
             {
-                return false;
+                throw new Exception("bruh");
             }
             
-            UseCharacterSkill( character, skillPosition, targetPosition);
+            base.UseCharacterSkill( character, skillIndex, targetPosition);
 
             EndTurnWithCharacterAction(character);
-            return true;
         }
 
         private void EndTurnWithCharacterAction(Character character)

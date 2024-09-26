@@ -14,19 +14,19 @@ namespace Controller
 			foreach (var button in buttons)
 			{
 				
-				if (button.name == "BowAttackButton")
+				if (button.name == "BowAttackShow")
 				{	
 					button.onClick.AddListener(() => OnSkillButtonClicked(fightFlow, character));
 				}
+				
 			}
 		}
 
-		private void OnSkillButtonClicked(SimpleFightFlow fightFlow, Character character)
+		private void OnSkillButtonClicked(SimpleFightFlow simpleFightFlow, Character character)
 		{
-			int skillPosition = character.Skills.FindIndex(skill => skill is BowAttackArcher);
-			var targetPositions = new List<Position> { new (3, false) };
-			//fightFlow.TryUseCharacterSkill(character, skillPosition, targetPositions);
-			fightFlow.TryShowSkillTargets(character, skillPosition);
+			var skill = character.Skills.FirstOrDefault(skill => skill is BowAttackArcher);
+			var skillIndex = skill.Index;
+			simpleFightFlow.ShowSkillTargets(character, skillIndex);
 		}
 	}
 }
