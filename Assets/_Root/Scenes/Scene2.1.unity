@@ -315,14 +315,14 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 542976176}
+  - {fileID: 225700206}
   - {fileID: 1321609605}
   - {fileID: 1167553667}
   - {fileID: 275455482}
   - {fileID: 26157362}
   - {fileID: 1764840671}
   - {fileID: 6149166555014894841}
-  - {fileID: 542976176}
-  - {fileID: 225700206}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cancelInputMode: {fileID: 225700205}
   parentTarget: {fileID: 581900447}
-  targetViewPrefab: {fileID: 450584523597600460, guid: e8e22a167dbf74b5d828f3576dc9abcd, type: 3}
+  targetViewPrefab: {fileID: 174104941157021894, guid: e8e22a167dbf74b5d828f3576dc9abcd, type: 3}
 --- !u!4 &566360250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3628674764712171360, guid: 0331e45682d09444b94d838057a68045, type: 3}

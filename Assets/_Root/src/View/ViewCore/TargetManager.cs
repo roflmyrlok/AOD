@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Model;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
@@ -23,7 +24,6 @@ namespace View
 
 		private void Awake()
 		{
-			Debug.Log("tgm awake");
 			cancelInputMode.gameObject.SetActive(false);
 			_activeTargetViews = new List<TargetView>();
 			_tempDisabledButtons = new List<UnityEngine.UI.Button>();
@@ -31,7 +31,7 @@ namespace View
 			cancelInputMode.GetComponentInChildren<Button>().onClick.AddListener(CancelInputMode);
 		}
 
-		public void ShowTarget(CharacterView characterView, List<Position> positionsCanTarget)
+		public void ShowTarget(CharacterView characterView, Skill skill)
 		{
 			var canvas = characterView.GetComponentInParent<Canvas>();
 			var playerTeam = canvas.GetComponentInChildren<PlayerTeamView>();
@@ -63,10 +63,19 @@ namespace View
 			TeamView performerTeamView = isPlayerTeam ? playerTeam : enemyTeam;
 			TeamView oppositionTeamView = isPlayerTeam ? enemyTeam : playerTeam;
 			
-			foreach (var pos in positionsCanTarget)
+			foreach (var pos in skill.PositionsCanTarget)
 			{
-				Debug.Log(pos.IsPlayerTeam.ToString() + " " + pos.Index);
 				var targetView = Instantiate(targetViewPrefab, parentTarget);
+
+				var buttonOfTargetView = targetView.GetComponentInChildren<Button>();
+				
+				// here is logic to call skill onClick of targetView button with position pos skill skill
+				
+				//characterView.GetComponentInChildren(CharacterController.FindAnyObjectByType())
+				
+				buttonOfTargetView.onClick.AddListener(CancelInputMode); //add CancelInputMode()
+
+				
 				targetView.transform.position = pos.IsPlayerTeam ?
 					 performerTeamView.PositionMapping[pos.Index.ToString()] :
 					 oppositionTeamView.PositionMapping[pos.Index.ToString()];
@@ -96,28 +105,27 @@ namespace View
 			foreach (var targetView in _activeTargetViews)
 			{
 				targetView.SetEnabled(true);
+				targetView.GetComponentInChildren<Button>().interactable = true;
 			}
 		}
 		
 		public void CancelInputMode()
 		{
-			Debug.Log("CancelInputMode");
-			var canvas = GetComponentInParent<Canvas>();
+			foreach (var button in _tempDisabledButtons)
+			{
+				button.interactable = true;
+			}
 			foreach (var targetView in _activeTargetViews)
 			{
 				targetView.DestroyGameObject();
 			}
 
 			_activeTargetViews = new List<TargetView>();
-			
-			foreach (var button in _tempDisabledButtons)
-			{
-				button.interactable = true;
-			}
+
+			_tempDisabledButtons = new List<Button>();
 
 			cancelInputMode.SetActive(false);
 			
 		}
-		
 	}
 }
