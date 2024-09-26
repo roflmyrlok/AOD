@@ -7,6 +7,7 @@ namespace View
 {
 	public abstract class CharacterView : MonoBehaviour, ICharacterView
 	{
+		public Stats Stats { get; protected set; }
 		public abstract bool IsViewFor(Character shape);
 		public abstract void ChangePosition(Vector3 newPosition);
 		public abstract void RotateCharacterModel();
@@ -47,7 +48,6 @@ namespace View
 	{
 		[SerializeField]
 		private Slider healthSlider;
-
 		protected virtual void Awake()
 		{
 		}
@@ -80,9 +80,9 @@ namespace View
             
 			healthSlider.maxValue = stats.MaxHealth;
 			healthSlider.value = stats.Health;
-            
-			// ToDO: update other stats in proper UI
-            
+
+			Stats = stats;
+
 		}
 
 		public override void SetButtonsState(bool isActive)

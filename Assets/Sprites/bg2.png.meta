@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6882eee6dbda74f22a1fbb9eec4722a5
+guid: bc04203ad81b148beb0264e5fc37624b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4049228571696106170
-    second: Corpse 3_0
+      213: -5348162698063837444
+    second: Screenshot 2024-09-27 at 01.24.25_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Corpse 3_0
+      name: Screenshot 2024-09-27 at 01.24.25_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 33
+        width: 54
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aba0f46aeefb13830800000000000000
-      internalID: 4049228571696106170
+      spriteID: cf609e4ac5287c5b0800000000000000
+      internalID: -5348162698063837444
       vertices: []
       indices: 
       edges: []
@@ -133,7 +133,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Corpse 3_0: 4049228571696106170
+      Screenshot 2024-09-27 at 01.24.25_0: -5348162698063837444
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
