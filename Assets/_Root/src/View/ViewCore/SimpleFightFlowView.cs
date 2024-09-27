@@ -25,6 +25,16 @@ namespace View
 			UpdateActiveCharacterUI(character);
 		}
 
+		public void ShowTeamWon(Team winner, Team loser)
+		{
+			var obj = transform.root.Find("Victory");
+			Debug.Log("1");
+			Text victory = obj.GetComponent<Text>();
+			Debug.Log("2");
+			victory.text = "GG noobs";
+
+		}
+
 		private void UpdateActiveCharacterUI(Character activeCharacter)
 		{
 			

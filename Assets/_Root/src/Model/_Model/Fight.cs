@@ -15,6 +15,8 @@ namespace Model
 			PlayerTeam = playerTeam;
 			EnemyTeam = enemyTeam;
 			FightView = fightView;
+			EnemyTeam.IvLost += (sender, args) => fightView.ShowTeamWon(PlayerTeam, EnemyTeam);
+			PlayerTeam.IvLost += (sender, args) => fightView.ShowTeamWon(EnemyTeam, PlayerTeam);
 		}
 
 		public virtual void ShowSkillTargets(Character performer, int skillIndex)

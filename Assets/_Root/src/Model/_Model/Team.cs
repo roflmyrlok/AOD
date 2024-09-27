@@ -11,6 +11,7 @@ namespace Model
         private readonly Dictionary<Position, Character> _characterPositions;
         private ITeamView _teamView;
         [CanBeNull] private Team _opposingTeam;
+        public event EventHandler IvLost;
 
         public Team(List<Character> characters)
         {
@@ -33,6 +34,10 @@ namespace Model
             if (sender is Character character && Contains(character))
             {
                 RemoveCharacterFromTeam(character);
+                if (_characterPositions.Count == 0)
+                {
+                    OnIvLost();
+                }
             }
         }
 
@@ -105,6 +110,11 @@ namespace Model
                 _teamView.RemoveCharacterFromTeam(character);
                 _teamView.UpdatedCharacterPositions(_characterPositions);
             }
+        }
+
+        protected virtual void OnIvLost()
+        {
+            IvLost?.Invoke(this, EventArgs.Empty);
         }
     }
 }
